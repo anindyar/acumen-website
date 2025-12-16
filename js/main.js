@@ -154,8 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Console easter egg
-  console.log('%c Acumen Labs ', 'background: linear-gradient(135deg, #6366f1, #06b6d4); color: white; font-size: 20px; padding: 10px 20px; border-radius: 5px;');
-  console.log('%c AI Consultancy for Dev Teams, Organisations & Government ', 'color: #6366f1; font-size: 12px;');
+  console.log('%c Acumen Labs ', 'background: linear-gradient(135deg, #14b8a6, #fb923c); color: white; font-size: 20px; padding: 10px 20px; border-radius: 5px;');
+  console.log('%c AI Consultancy for Dev Teams, Organisations & Government ', 'color: #14b8a6; font-size: 12px;');
   console.log('%c anindya@acumenlabs.co ', 'color: #94a3b8; font-size: 11px;');
 
   // ========================================

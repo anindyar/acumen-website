@@ -1,15 +1,15 @@
 /* Acumen Labs - Clean Bright Nerdy Theme */
 
 :root {
-  /* Primary Colors */
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #818cf8;
+  /* Primary Colors - Aquamarine */
+  --primary: #14b8a6;
+  --primary-dark: #0d9488;
+  --primary-light: #2dd4bf;
 
-  /* Accent Colors */
-  --accent: #06b6d4;
-  --accent-dark: #0891b2;
-  --accent-light: #22d3ee;
+  /* Accent Colors - Light Orange */
+  --accent: #fb923c;
+  --accent-dark: #f97316;
+  --accent-light: #fdba74;
 
   /* Neutrals */
   --bg-primary: #ffffff;
@@ -28,10 +28,10 @@
   --error: #ef4444;
 
   /* Code/Terminal */
-  --terminal-green: #4ade80;
-  --terminal-blue: #60a5fa;
-  --terminal-purple: #c084fc;
-  --terminal-yellow: #fbbf24;
+  --terminal-green: #2dd4bf;
+  --terminal-blue: #14b8a6;
+  --terminal-purple: #fb923c;
+  --terminal-yellow: #fdba74;
 
   /* Spacing */
   --space-xs: 0.25rem;
