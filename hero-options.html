@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Options - Acumen Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .option-divider {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    /* Option 1: Metrics Focus */
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .metric-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .metric-value {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .metric-label {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .metric-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Option 2: Testimonial */
+    .hero-testimonial {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      position: relative;
+    }
+    .quote-mark {
+      position: absolute;
+      top: 1.5rem;
+      left: 2rem;
+      font-size: 4rem;
+      color: var(--primary);
+      opacity: 0.2;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .testimonial-text {
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+    }
+    .testimonial-info strong {
+      display: block;
+      color: var(--text-primary);
+    }
+    .testimonial-info span {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Option 3: Process Steps */
+    .hero-process {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .process-step {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      transition: all 0.25s ease;
+    }
+    .process-step:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.02);
+    }
+    .process-number {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .process-content h4 {
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+    }
+    .process-content p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .process-arrow {
+      margin-left: auto;
+      color: var(--primary);
+      opacity: 0.5;
+    }
+
+    /* Option 4: Visual Cards */
+    .hero-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .visual-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      transition: all 0.25s ease;
+    }
+    .visual-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+    .visual-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(6, 182, 212, 0.05));
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+    .visual-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .visual-card h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .visual-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Option 5: Clean Minimal */
+    .hero-minimal {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-minimal .hero-badge {
+      margin-bottom: 2rem;
+    }
+    .hero-minimal h1 {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+    .hero-minimal p.lead {
+      font-size: 1.35rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+    .client-logos {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .client-logos p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .logo-row {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .client-logo {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 1.1rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================
+     OPTION 1: METRICS FOCUS
+     Clean cards showing key outcomes/benefits
+     ============================================ -->
+<div class="option-divider">Option 1: Metrics Focus</div>
+<section class="hero">
+  <div class="container">
+    <div class="hero-content" style="max-width: 550px;">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span>AI Consultancy</span>
+      </div>
+      <h1>Accelerate Your <span class="highlight">AI Journey</span></h1>
+      <p>Strategic AI consultancy for development teams, organisations, and government. Transform how you build, decide, and automate.</p>
+      <div class="hero-buttons">
+        <a href="contact.html" class="btn btn-primary">Start Consultation</a>
+        <a href="services.html" class="btn btn-secondary">Explore Services</a>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <div class="metric-card">
+        <div class="metric-icon">⚡</div>
+        <div class="metric-value">10x</div>
+        <div class="metric-label">Faster Development</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🎯</div>
+        <div class="metric-value">80%</div>
+        <div class="metric-label">Faster Decisions</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🔄</div>
+        <div class="metric-value">90%</div>
+        <div class="metric-label">Tasks Automated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 2: TESTIMONIAL/SOCIAL PROOF
+     Features a quote from a client or founder
+     ============================================ -->
+<div class="option-divider">Option 2: Testimonial / Quote</div>
+<section class="hero">
+  <div class="container">
+    <div class="hero-content" style="max-width: 550px;">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span>AI Consultancy</span>
+      </div>
+      <h1>Transform with <span class="highlight">Intelligent AI</span></h1>
+      <p>We help development teams, organisations, and governments harness AI for faster development, smarter decisions, and complete automation.</p>
+      <div class="hero-buttons">
+        <a href="contact.html" class="btn btn-primary">Book a Call</a>
+        <a href="about.html" class="btn btn-secondary">About Us</a>
+      </div>
+    </div>
+    <div class="hero-testimonial">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">AI should be an enabler, not a constraint. We build solutions that are technically sound, pragmatic, and scalable—understanding both technology and business objectives.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">AR</div>
+        <div class="testimonial-info">
+          <strong>Anindya Roy</strong>
+          <span>Founder & Chief AI Architect • 25+ years in technology</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 3: PROCESS STEPS
+     Shows the consultation journey
+     ============================================ -->
+<div class="option-divider">Option 3: Process / Journey</div>
+<section class="hero">
+  <div class="container">
+    <div class="hero-content" style="max-width: 550px;">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span>AI Consultancy</span>
+      </div>
+      <h1>Your AI <span class="highlight">Transformation</span> Partner</h1>
+      <p>From strategy to implementation, we guide your organisation through every step of the AI adoption journey.</p>
+      <div class="hero-buttons">
+        <a href="contact.html" class="btn btn-primary">Start Your Journey</a>
+        <a href="services.html" class="btn btn-secondary">Our Services</a>
+      </div>
+    </div>
+    <div class="hero-process">
+      <div class="process-step">
+        <div class="process-number">1</div>
+        <div class="process-content">
+          <h4>Discovery Call</h4>
+          <p>Understand your challenges and identify AI opportunities</p>
+        </div>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step">
+        <div class="process-number">2</div>
+        <div class="process-content">
+          <h4>Strategy & Roadmap</h4>
+          <p>Custom AI implementation plan tailored to your needs</p>
+        </div>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step">
+        <div class="process-number">3</div>
+        <div class="process-content">
+          <h4>Implementation</h4>
+          <p>Hands-on deployment with your team</p>
+        </div>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step">
+        <div class="process-number">4</div>
+        <div class="process-content">
+          <h4>Ongoing Support</h4>
+          <p>24/7 support and continuous optimization</p>
+        </div>
+        <span class="process-arrow">✓</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 4: SERVICE CARDS
+     Visual cards showing key offerings
+     ============================================ -->
+<div class="option-divider">Option 4: Service Cards</div>
+<section class="hero">
+  <div class="container">
+    <div class="hero-content" style="max-width: 550px;">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span>AI Consultancy</span>
+      </div>
+      <h1>AI Solutions <span class="highlight">That Deliver</span></h1>
+      <p>Strategic AI consultancy for organisations ready to accelerate development, automate workflows, and make data-driven decisions.</p>
+      <div class="hero-buttons">
+        <a href="contact.html" class="btn btn-primary">Get Started</a>
+        <a href="services.html" class="btn btn-secondary">All Services</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-card featured">
+        <div class="visual-icon">🚀</div>
+        <h4>Faster Development</h4>
+        <p>AI-powered coding, testing, and deployment that multiplies your team's output.</p>
+      </div>
+      <div class="visual-card">
+        <div class="visual-icon">📊</div>
+        <h4>Smarter Decisions</h4>
+        <p>Data-driven insights in real-time.</p>
+      </div>
+      <div class="visual-card">
+        <div class="visual-icon">⚙️</div>
+        <h4>Total Automation</h4>
+        <p>Eliminate repetitive manual tasks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 5: CLEAN MINIMAL
+     Text-focused, elegant, with client logos
+     ============================================ -->
+<div class="option-divider">Option 5: Clean Minimal</div>
+<section class="hero" style="padding: 6rem 0;">
+  <div class="container">
+    <div class="hero-minimal">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span>AI Consultancy • Mauritius</span>
+      </div>
+      <h1>We help organisations <span class="highlight">harness AI</span></h1>
+      <p class="lead">Strategic consultancy for development teams, enterprises, and government. Faster development. Smarter decisions. Complete automation.</p>
+      <div class="hero-buttons" style="justify-content: center;">
+        <a href="contact.html" class="btn btn-primary">Schedule Consultation</a>
+        <a href="services.html" class="btn btn-secondary">View Services</a>
+      </div>
+      <div class="client-logos">
+        <p>Trusted by technology leaders</p>
+        <div class="logo-row">
+          <span class="client-logo">Digital Insights</span>
+          <span class="client-logo">Inspire Infosol</span>
+          <span class="client-logo">Stortech</span>
+          <span class="client-logo">Chimes Group</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="padding: 4rem; text-align: center; background: var(--bg-secondary);">
+  <h2>Which option do you prefer?</h2>
+  <p style="color: var(--text-secondary); max-width: 600px; margin: 1rem auto;">
+    Each option can be further customized. Let me know your choice and I'll update the main site.
+  </p>
+  <ul style="list-style: none; text-align: left; max-width: 500px; margin: 2rem auto; padding: 0;">
+    <li style="padding: 0.5rem 0;"><strong>Option 1:</strong> Metrics Focus - Shows key outcomes with numbers</li>
+    <li style="padding: 0.5rem 0;"><strong>Option 2:</strong> Testimonial - Personal touch with founder quote</li>
+    <li style="padding: 0.5rem 0;"><strong>Option 3:</strong> Process Steps - Shows the consultation journey</li>
+    <li style="padding: 0.5rem 0;"><strong>Option 4:</strong> Service Cards - Visual service highlights</li>
+    <li style="padding: 0.5rem 0;"><strong>Option 5:</strong> Clean Minimal - Text-focused with client logos</li>
+  </ul>
+</div>
+
+</body>
+</html>

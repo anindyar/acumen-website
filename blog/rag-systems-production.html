@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Best practices for implementing Retrieval-Augmented Generation that actually works in enterprise environments.">
+  <title>Building Production-Ready RAG Systems | Acumen Labs Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/blog-post.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">A</div>
+        <span>Acumen Labs</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../services.html">Services</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../blog.html" class="active">Blog</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <div class="container">
+      <div class="article-meta">
+        <span class="article-category">AI Architecture</span>
+        <span class="article-date">November 2024</span>
+        <span class="article-read-time">12 min read</span>
+      </div>
+      <h1>Building Production-Ready RAG Systems</h1>
+      <p class="article-subtitle">Best practices for implementing Retrieval-Augmented Generation that actually works in enterprise environments.</p>
+      <div class="article-author">
+        <div class="author-avatar">AR</div>
+        <div class="author-info">
+          <span class="author-name">Anindya Roy</span>
+          <span class="author-title">Founder & Chief AI Architect</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Content -->
+  <article class="article-content">
+    <div class="container container-narrow">
+
+      <p class="lead">Retrieval-Augmented Generation has become the go-to architecture for building AI applications that need to work with your organisation's proprietary data. But the gap between a RAG demo and a production system is vast. This guide covers what it actually takes to build RAG systems that work reliably at scale.</p>
+
+      <h2>Why RAG Matters</h2>
+
+      <p>Large Language Models are trained on public data with a knowledge cutoff date. They don't know about your internal documentation, your specific products, or yesterday's meeting notes. RAG bridges this gap by retrieving relevant context from your data and providing it to the LLM alongside the user's question.</p>
+
+      <p>The basic flow looks simple:</p>
+      <ol>
+        <li>User asks a question</li>
+        <li>System retrieves relevant documents from a vector database</li>
+        <li>Retrieved context + question goes to the LLM</li>
+        <li>LLM generates an answer grounded in your data</li>
+      </ol>
+
+      <p>Simple in concept, complex in execution. Let's examine each component.</p>
+
+      <h2>Document Processing: The Foundation</h2>
+
+      <p>Your RAG system is only as good as the data you put into it. This phase is often underestimated and is where most production issues originate.</p>
+
+      <h3>Chunking Strategy</h3>
+
+      <p>How you split documents into chunks dramatically affects retrieval quality. The naive approach—splitting by character count—rarely works well.</p>
+
+      <div class="callout callout-info">
+        <h4>Chunking Best Practices</h4>
+        <ul>
+          <li><strong>Semantic chunking:</strong> Split at natural boundaries (paragraphs, sections, headers)</li>
+          <li><strong>Overlap:</strong> Include 10-20% overlap between chunks to preserve context</li>
+          <li><strong>Size matters:</strong> 256-512 tokens works well for most use cases</li>
+          <li><strong>Preserve metadata:</strong> Keep document titles, section headers, dates</li>
+        </ul>
+      </div>
+
+      <pre><code># Example: Semantic chunking with LangChain
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50,
+    separators=["\n\n", "\n", ". ", " ", ""]
+)
+
+chunks = splitter.split_documents(documents)</code></pre>
+
+      <h3>Document Types</h3>
+
+      <p>Real enterprise data comes in many formats. Each requires specific handling:</p>
+
+      <ul>
+        <li><strong>PDFs:</strong> Use extraction libraries that preserve structure (tables, headers). Consider OCR for scanned documents.</li>
+        <li><strong>HTML/Web:</strong> Strip navigation, footers, and boilerplate. Preserve semantic structure.</li>
+        <li><strong>Code:</strong> Chunk by functions/classes, not arbitrary line counts. Include docstrings and comments.</li>
+        <li><strong>Spreadsheets:</strong> Convert to text with row/column context preserved.</li>
+      </ul>
+
+      <h2>Embedding Models: Choose Wisely</h2>
+
+      <p>The embedding model converts your text chunks into vectors. This choice is permanent—changing embeddings means re-processing your entire corpus.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Dimensions</th>
+              <th>Context</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>OpenAI text-embedding-3-large</td>
+              <td>3072</td>
+              <td>8191 tokens</td>
+              <td>General purpose, high quality</td>
+            </tr>
+            <tr>
+              <td>Cohere embed-v3</td>
+              <td>1024</td>
+              <td>512 tokens</td>
+              <td>Multilingual, compression</td>
+            </tr>
+            <tr>
+              <td>BGE-large-en-v1.5</td>
+              <td>1024</td>
+              <td>512 tokens</td>
+              <td>Open source, self-hosted</td>
+            </tr>
+            <tr>
+              <td>E5-mistral-7b-instruct</td>
+              <td>4096</td>
+              <td>32k tokens</td>
+              <td>Long documents, instructions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>For privacy-sensitive deployments, BGE or E5 models can run entirely on your infrastructure.</p>
+
+      <h2>Vector Database Selection</h2>
+
+      <p>Your vector database stores embeddings and handles similarity search. The choice depends on scale and operational requirements.</p>
+
+      <h3>For Getting Started</h3>
+      <ul>
+        <li><strong>Chroma:</strong> Simple, embedded, great for prototypes</li>
+        <li><strong>Qdrant:</strong> Docker-friendly, good performance, open source</li>
+        <li><strong>Weaviate:</strong> Feature-rich, hybrid search built-in</li>
+      </ul>
+
+      <h3>For Production Scale</h3>
+      <ul>
+        <li><strong>Pinecone:</strong> Managed, scales effortlessly, but vendor lock-in</li>
+        <li><strong>Milvus:</strong> Open source, handles billions of vectors</li>
+        <li><strong>pgvector:</strong> If you're already on PostgreSQL, add vector search</li>
+      </ul>
+
+      <pre><code># Example: Qdrant with local deployment
+from qdrant_client import QdrantClient
+from qdrant_client.models import Distance, VectorParams
+
+client = QdrantClient(host="localhost", port=6333)
+
+client.create_collection(
+    collection_name="documents",
+    vectors_config=VectorParams(size=1024, distance=Distance.COSINE)
+)</code></pre>
+
+      <h2>Retrieval: Beyond Basic Similarity</h2>
+
+      <p>Naive vector similarity search often returns irrelevant results. Production systems need smarter retrieval strategies.</p>
+
+      <h3>Hybrid Search</h3>
+      <p>Combine dense vectors (semantic similarity) with sparse vectors (keyword matching). This catches both conceptual matches and exact term matches.</p>
+
+      <pre><code># Hybrid search with reciprocal rank fusion
+def hybrid_search(query, k=10, alpha=0.5):
+    # Dense retrieval
+    dense_results = vector_db.similarity_search(query, k=k*2)
+
+    # Sparse retrieval (BM25)
+    sparse_results = bm25_index.search(query, k=k*2)
+
+    # Reciprocal rank fusion
+    combined = reciprocal_rank_fusion([dense_results, sparse_results], k=k)
+
+    return combined</code></pre>
+
+      <h3>Query Transformation</h3>
+      <p>User queries are often ambiguous or poorly phrased. Transform them before retrieval:</p>
+      <ul>
+        <li><strong>Query expansion:</strong> Add synonyms and related terms</li>
+        <li><strong>HyDE:</strong> Have the LLM generate a hypothetical answer, then search for similar documents</li>
+        <li><strong>Multi-query:</strong> Generate multiple query variations and merge results</li>
+      </ul>
+
+      <h3>Re-ranking</h3>
+      <p>After initial retrieval, use a more expensive model to re-rank results. Cross-encoder models like Cohere Rerank or BGE-reranker significantly improve precision.</p>
+
+      <h2>Context Assembly</h2>
+
+      <p>You've retrieved relevant chunks. Now you need to assemble them into an effective prompt.</p>
+
+      <div class="callout callout-success">
+        <h4>Context Assembly Tips</h4>
+        <ul>
+          <li>Order chunks by relevance (most relevant first)</li>
+          <li>Include source metadata for citations</li>
+          <li>Limit total context to avoid diluting signal with noise</li>
+          <li>Use clear delimiters between different sources</li>
+        </ul>
+      </div>
+
+      <pre><code># Example prompt structure
+CONTEXT:
+[Source: Q4 Financial Report, Page 12]
+Revenue increased 23% year-over-year to $4.2B...
+
+[Source: CEO Letter to Shareholders]
+Our strategic investments in AI infrastructure...
+
+---
+
+Based on the above context, answer the user's question.
+If the answer cannot be found in the context, say so.
+
+Question: {user_question}</code></pre>
+
+      <h2>Evaluation: Measuring What Matters</h2>
+
+      <p>You can't improve what you don't measure. Set up proper evaluation before deploying to production.</p>
+
+      <h3>Key Metrics</h3>
+
+      <ul>
+        <li><strong>Retrieval Recall@K:</strong> What percentage of relevant documents appear in top K results?</li>
+        <li><strong>Answer Correctness:</strong> Does the generated answer match ground truth?</li>
+        <li><strong>Faithfulness:</strong> Is the answer grounded in retrieved context (no hallucinations)?</li>
+        <li><strong>Latency:</strong> End-to-end response time</li>
+      </ul>
+
+      <h3>Building an Evaluation Set</h3>
+      <p>Create a set of 50-100 question-answer pairs with known correct answers. Include edge cases:</p>
+      <ul>
+        <li>Questions with no answer in corpus</li>
+        <li>Questions requiring multi-document synthesis</li>
+        <li>Questions with ambiguous wording</li>
+        <li>Questions about recent data updates</li>
+      </ul>
+
+      <h2>Production Hardening</h2>
+
+      <h3>Caching</h3>
+      <p>Cache at multiple levels:</p>
+      <ul>
+        <li>Embedding cache for repeated queries</li>
+        <li>Retrieval results cache for common questions</li>
+        <li>LLM response cache for identical inputs</li>
+      </ul>
+
+      <h3>Fallback Strategies</h3>
+      <p>What happens when retrieval returns nothing relevant?</p>
+      <ul>
+        <li>Expand search to broader scope</li>
+        <li>Fall back to LLM general knowledge with disclaimer</li>
+        <li>Route to human support</li>
+      </ul>
+
+      <h3>Observability</h3>
+      <p>Log everything you'll need for debugging:</p>
+      <ul>
+        <li>Original query and any transformations</li>
+        <li>Retrieved documents and scores</li>
+        <li>Final prompt sent to LLM</li>
+        <li>Generated response</li>
+        <li>Latency breakdown by component</li>
+      </ul>
+
+      <h2>Common Pitfalls</h2>
+
+      <div class="callout callout-primary">
+        <h4>Mistakes We See Repeatedly</h4>
+        <ul>
+          <li><strong>Ignoring chunk boundaries:</strong> Key information split across chunks becomes unretrievable</li>
+          <li><strong>Too much context:</strong> Stuffing the prompt with marginally relevant data confuses the LLM</li>
+          <li><strong>Stale indexes:</strong> Forgetting to update embeddings when source documents change</li>
+          <li><strong>Missing metadata:</strong> Without source info, users can't verify answers</li>
+          <li><strong>Evaluation afterthought:</strong> Building without measuring leads to unknown quality</li>
+        </ul>
+      </div>
+
+      <h2>Architecture for Scale</h2>
+
+      <p>A production RAG system isn't a single script—it's a set of services:</p>
+
+      <ol>
+        <li><strong>Ingestion Pipeline:</strong> Watches for new/updated documents, chunks, embeds, indexes</li>
+        <li><strong>Query Service:</strong> Handles user queries, retrieval, context assembly</li>
+        <li><strong>LLM Gateway:</strong> Routes to appropriate models, handles rate limiting, fallbacks</li>
+        <li><strong>Feedback Loop:</strong> Captures user ratings, enables continuous improvement</li>
+      </ol>
+
+      <h2>Getting Started</h2>
+
+      <p>If you're building your first production RAG system:</p>
+
+      <ol>
+        <li>Start with a focused corpus (one document type, one use case)</li>
+        <li>Build evaluation set before building the system</li>
+        <li>Use managed services initially to reduce operational burden</li>
+        <li>Invest in observability from day one</li>
+        <li>Plan for iteration—your first version won't be your last</li>
+      </ol>
+
+      <div class="callout callout-primary">
+        <h4>Need Help Building RAG Systems?</h4>
+        <p>Acumen Labs has implemented RAG architectures across industries—from legal document search to technical support automation. We can help you navigate the complexities and avoid common pitfalls.</p>
+        <a href="../contact.html" class="btn btn-primary">Schedule a Consultation</a>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Article Footer -->
+  <div class="article-footer">
+    <div class="container container-narrow">
+      <div class="article-tags">
+        <span class="tag">RAG</span>
+        <span class="tag">Vector Database</span>
+        <span class="tag">LLM</span>
+        <span class="tag">Enterprise AI</span>
+        <span class="tag">Architecture</span>
+      </div>
+      <div class="article-share">
+        <span>Share this article:</span>
+        <a href="https://www.linkedin.com/in/ranindya/" target="_blank" class="share-link">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Posts -->
+  <section class="section related-posts">
+    <div class="container">
+      <h3>Related Articles</h3>
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div class="blog-image" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+            <span>AI</span>
+          </div>
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span class="blog-tag">Generative AI</span>
+            </div>
+            <h3>Getting Started with Local LLMs</h3>
+            <p>A practical guide to deploying open-source models on your own infrastructure.</p>
+            <a href="local-llms-getting-started.html" class="read-more">Read more &rarr;</a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <div class="blog-image" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+            <span>LLM</span>
+          </div>
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span class="blog-tag">Generative AI</span>
+            </div>
+            <h3>Prompt Engineering for Enterprise</h3>
+            <p>Techniques for getting consistent, reliable outputs from large language models.</p>
+            <a href="prompt-engineering-enterprise.html" class="read-more">Read more &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-icon">A</div>
+            <span>Acumen Labs</span>
+          </div>
+          <p>AI consultancy empowering development teams, organisations, and government with intelligent solutions.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="../services.html#dev">AI for Dev Teams</a></li>
+            <li><a href="../services.html#org">AI for Organisations</a></li>
+            <li><a href="../services.html#gov">AI for Government</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../about.html">About Us</a></li>
+            <li><a href="../blog.html">Blog</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="mailto:anindya@acumenlabs.co">Email Us</a></li>
+            <li><a href="https://www.linkedin.com/in/ranindya/" target="_blank">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Acumen Labs. Mauritius. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
