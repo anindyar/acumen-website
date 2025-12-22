@@ -368,7 +368,7 @@ code, .mono {
   padding: var(--space-2xl) 0 0 0;
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero::before {
@@ -404,17 +404,16 @@ code, .mono {
 /* AI Diagram Section */
 .ai-diagram-wrapper {
   position: relative;
+  z-index: 2;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-md);
-  overflow: hidden;
 }
 
 .ai-diagram {
   width: 100%;
   height: auto;
-  min-height: 350px;
   display: block;
 }
 
