@@ -35,7 +35,209 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <div class="container">
+    <!-- AI System Diagram Background -->
+    <div class="ai-diagram-bg">
+      <svg class="ai-diagram" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <!-- Gradients -->
+          <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#fb923c;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.6" />
+            <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.6" />
+          </linearGradient>
+
+          <!-- Glow filter -->
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+
+          <!-- Animated dash pattern -->
+          <pattern id="flowPattern" patternUnits="userSpaceOnUse" width="20" height="1">
+            <line x1="0" y1="0" x2="10" y2="0" stroke="#06b6d4" stroke-width="2" stroke-linecap="round"/>
+          </pattern>
+        </defs>
+
+        <!-- Connection Lines with animated flow -->
+        <g class="connections" opacity="0.4">
+          <!-- Data to Models -->
+          <path class="flow-line flow-1" d="M 200 200 Q 350 180 450 250" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+          <path class="flow-line flow-2" d="M 200 300 Q 350 320 450 280" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+          <path class="flow-line flow-3" d="M 200 400 Q 350 420 450 320" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+
+          <!-- Models to Agents -->
+          <path class="flow-line flow-4" d="M 550 280 Q 650 260 700 200" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+          <path class="flow-line flow-5" d="M 550 280 Q 650 300 700 350" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+          <path class="flow-line flow-6" d="M 550 280 Q 650 340 700 480" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+
+          <!-- Agents to Outputs -->
+          <path class="flow-line flow-7" d="M 800 200 Q 900 180 1000 150" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+          <path class="flow-line flow-8" d="M 800 350 Q 900 340 1000 300" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+          <path class="flow-line flow-9" d="M 800 480 Q 900 470 1000 450" fill="none" stroke="url(#flowGradient)" stroke-width="2"/>
+        </g>
+
+        <!-- Animated particles along paths -->
+        <g class="particles">
+          <circle class="particle particle-1" r="4" fill="#06b6d4" filter="url(#glow)">
+            <animateMotion dur="3s" repeatCount="indefinite" path="M 200 200 Q 350 180 450 250"/>
+          </circle>
+          <circle class="particle particle-2" r="4" fill="#06b6d4" filter="url(#glow)">
+            <animateMotion dur="3.5s" repeatCount="indefinite" path="M 200 300 Q 350 320 450 280"/>
+          </circle>
+          <circle class="particle particle-3" r="4" fill="#06b6d4" filter="url(#glow)">
+            <animateMotion dur="4s" repeatCount="indefinite" path="M 200 400 Q 350 420 450 320"/>
+          </circle>
+          <circle class="particle particle-4" r="3" fill="#fb923c" filter="url(#glow)">
+            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 550 280 Q 650 260 700 200"/>
+          </circle>
+          <circle class="particle particle-5" r="3" fill="#fb923c" filter="url(#glow)">
+            <animateMotion dur="3s" repeatCount="indefinite" path="M 550 280 Q 650 300 700 350"/>
+          </circle>
+          <circle class="particle particle-6" r="3" fill="#fb923c" filter="url(#glow)">
+            <animateMotion dur="3.5s" repeatCount="indefinite" path="M 550 280 Q 650 340 700 480"/>
+          </circle>
+          <circle class="particle particle-7" r="4" fill="#06b6d4" filter="url(#glow)">
+            <animateMotion dur="2s" repeatCount="indefinite" path="M 800 200 Q 900 180 1000 150"/>
+          </circle>
+          <circle class="particle particle-8" r="4" fill="#06b6d4" filter="url(#glow)">
+            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 800 350 Q 900 340 1000 300"/>
+          </circle>
+          <circle class="particle particle-9" r="4" fill="#06b6d4" filter="url(#glow)">
+            <animateMotion dur="3s" repeatCount="indefinite" path="M 800 480 Q 900 470 1000 450"/>
+          </circle>
+        </g>
+
+        <!-- DATA INPUTS Column -->
+        <g class="diagram-column data-inputs">
+          <text x="140" y="100" class="column-label" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">DATA INPUTS</text>
+
+          <!-- Database -->
+          <g class="node node-data" transform="translate(100, 160)">
+            <rect x="0" y="0" width="80" height="70" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <ellipse cx="40" cy="20" rx="25" ry="8" fill="none" stroke="#06b6d4" stroke-width="2"/>
+            <path d="M 15 20 L 15 45 Q 15 55 40 55 Q 65 55 65 45 L 65 20" fill="none" stroke="#06b6d4" stroke-width="2"/>
+            <ellipse cx="40" cy="45" rx="25" ry="8" fill="none" stroke="#06b6d4" stroke-width="2"/>
+            <text x="40" y="65" font-size="9" fill="#64748b" text-anchor="middle">Databases</text>
+          </g>
+
+          <!-- API -->
+          <g class="node node-data" transform="translate(100, 260)">
+            <rect x="0" y="0" width="80" height="70" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <text x="40" y="28" font-size="14" fill="#06b6d4" text-anchor="middle" font-weight="700">&lt;/&gt;</text>
+            <text x="40" y="45" font-size="10" fill="#06b6d4" text-anchor="middle">API</text>
+            <text x="40" y="65" font-size="9" fill="#64748b" text-anchor="middle">APIs</text>
+          </g>
+
+          <!-- Documents -->
+          <g class="node node-data" transform="translate(100, 360)">
+            <rect x="0" y="0" width="80" height="70" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <rect x="25" y="12" width="30" height="38" rx="2" fill="none" stroke="#06b6d4" stroke-width="2"/>
+            <line x1="30" y1="22" x2="50" y2="22" stroke="#06b6d4" stroke-width="1.5"/>
+            <line x1="30" y1="30" x2="50" y2="30" stroke="#06b6d4" stroke-width="1.5"/>
+            <line x1="30" y1="38" x2="45" y2="38" stroke="#06b6d4" stroke-width="1.5"/>
+            <text x="40" y="65" font-size="9" fill="#64748b" text-anchor="middle">Documents</text>
+          </g>
+        </g>
+
+        <!-- MODELS Column -->
+        <g class="diagram-column models">
+          <text x="500" y="100" class="column-label" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">AI MODELS</text>
+
+          <!-- Central Model Node -->
+          <g class="node node-model" transform="translate(430, 200)">
+            <rect x="0" y="0" width="140" height="140" rx="12" fill="white" stroke="#fb923c" stroke-width="3" class="node-bg node-glow"/>
+            <circle cx="70" cy="50" r="25" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <circle cx="70" cy="50" r="15" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <circle cx="70" cy="50" r="5" fill="#fb923c"/>
+            <!-- Neural network nodes -->
+            <circle cx="45" cy="85" r="6" fill="#fb923c" opacity="0.6"/>
+            <circle cx="70" cy="85" r="6" fill="#fb923c" opacity="0.8"/>
+            <circle cx="95" cy="85" r="6" fill="#fb923c" opacity="0.6"/>
+            <line x1="45" y1="85" x2="70" y2="85" stroke="#fb923c" stroke-width="1" opacity="0.5"/>
+            <line x1="70" y1="85" x2="95" y2="85" stroke="#fb923c" stroke-width="1" opacity="0.5"/>
+            <text x="70" y="115" font-size="11" fill="#334155" text-anchor="middle" font-weight="600">LLMs</text>
+            <text x="70" y="130" font-size="9" fill="#64748b" text-anchor="middle">GPT / Claude / Custom</text>
+          </g>
+        </g>
+
+        <!-- AGENTS Column -->
+        <g class="diagram-column agents">
+          <text x="750" y="100" class="column-label" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">AI AGENTS</text>
+
+          <!-- Code Agent -->
+          <g class="node node-agent" transform="translate(680, 140)">
+            <rect x="0" y="0" width="100" height="80" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <rect x="25" y="15" width="50" height="35" rx="4" fill="#1e293b"/>
+            <text x="50" y="38" font-size="10" fill="#22c55e" text-anchor="middle" font-family="monospace">&gt;_</text>
+            <text x="50" y="70" font-size="9" fill="#64748b" text-anchor="middle">Code Agent</text>
+          </g>
+
+          <!-- Research Agent -->
+          <g class="node node-agent" transform="translate(680, 290)">
+            <rect x="0" y="0" width="100" height="80" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <circle cx="50" cy="32" r="18" fill="none" stroke="#06b6d4" stroke-width="2"/>
+            <line x1="63" y1="45" x2="72" y2="54" stroke="#06b6d4" stroke-width="2" stroke-linecap="round"/>
+            <text x="50" y="70" font-size="9" fill="#64748b" text-anchor="middle">Research Agent</text>
+          </g>
+
+          <!-- Automation Agent -->
+          <g class="node node-agent" transform="translate(680, 420)">
+            <rect x="0" y="0" width="100" height="80" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <path d="M 35 25 L 50 35 L 65 25 L 65 45 L 50 55 L 35 45 Z" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <circle cx="50" cy="40" r="6" fill="#fb923c"/>
+            <text x="50" y="70" font-size="9" fill="#64748b" text-anchor="middle">Automation</text>
+          </g>
+        </g>
+
+        <!-- OUTPUTS Column -->
+        <g class="diagram-column outputs">
+          <text x="1050" y="100" class="column-label" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">OUTPUTS</text>
+
+          <!-- Generated Code -->
+          <g class="node node-output" transform="translate(980, 100)">
+            <rect x="0" y="0" width="90" height="70" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <text x="45" y="25" font-size="18" fill="#22c55e" text-anchor="middle">{ }</text>
+            <text x="45" y="45" font-size="9" fill="#334155" text-anchor="middle" font-weight="500">Code</text>
+            <text x="45" y="58" font-size="8" fill="#64748b" text-anchor="middle">Generated</text>
+          </g>
+
+          <!-- Insights -->
+          <g class="node node-output" transform="translate(980, 250)">
+            <rect x="0" y="0" width="90" height="70" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <path d="M 30 20 L 60 20 M 30 30 L 55 30 M 30 40 L 50 40" stroke="#06b6d4" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="65" cy="35" r="10" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <text x="45" y="60" font-size="9" fill="#334155" text-anchor="middle" font-weight="500">Insights</text>
+          </g>
+
+          <!-- Automation -->
+          <g class="node node-output" transform="translate(980, 400)">
+            <rect x="0" y="0" width="90" height="70" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2" class="node-bg"/>
+            <path d="M 30 35 L 40 25 L 40 32 L 60 32 L 60 38 L 40 38 L 40 45 Z" fill="#06b6d4"/>
+            <text x="45" y="58" font-size="9" fill="#334155" text-anchor="middle" font-weight="500">Workflows</text>
+          </g>
+        </g>
+
+        <!-- Floating decorative elements -->
+        <g class="decorations" opacity="0.3">
+          <circle class="float-circle" cx="300" cy="500" r="40" fill="none" stroke="#06b6d4" stroke-width="1"/>
+          <circle class="float-circle" cx="900" cy="80" r="30" fill="none" stroke="#fb923c" stroke-width="1"/>
+          <circle class="float-circle" cx="600" cy="520" r="25" fill="none" stroke="#06b6d4" stroke-width="1"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="container hero-container">
       <div class="hero-content">
         <div class="hero-badge">
           <span class="dot"></span>
@@ -46,51 +248,6 @@
         <div class="hero-buttons">
           <a href="contact.html" class="btn btn-primary">Start Consultation</a>
           <a href="services.html" class="btn btn-secondary">Explore Services</a>
-        </div>
-      </div>
-      <div class="hero-quotes">
-        <div class="quotes-card">
-          <div class="quotes-header">
-            <span class="terminal-dots">
-              <span></span><span></span><span></span>
-            </span>
-            <span class="quotes-title">insights.log</span>
-          </div>
-          <div class="quotes-body">
-            <div class="quote-line">
-              <span class="line-number">01</span>
-              <span class="quote-prefix">&gt;</span>
-              <span class="quote-text" id="typewriter"></span>
-              <span class="cursor-blink">|</span>
-            </div>
-            <div class="quote-meta">
-              <span class="meta-label">source:</span>
-              <span class="meta-value" id="quote-author">Anindya Roy</span>
-            </div>
-            <div class="quote-meta">
-              <span class="meta-label">role:</span>
-              <span class="meta-value">Founder & Chief AI Architect</span>
-            </div>
-            <div class="quote-divider"></div>
-            <div class="quote-stats">
-              <div class="stat-item">
-                <span class="stat-icon">▲</span>
-                <span class="stat-text">25+ years experience</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-icon">◆</span>
-                <span class="stat-text">Author: "Gen AI for Leaders"</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-icon">●</span>
-                <span class="stat-text">100% client satisfaction</span>
-              </div>
-            </div>
-          </div>
-          <div class="quotes-footer">
-            <span class="quote-counter"><span id="current-quote">1</span> / <span id="total-quotes">5</span></span>
-            <span class="quote-progress"><span id="progress-bar"></span></span>
-          </div>
         </div>
       </div>
     </div>
