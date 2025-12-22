@@ -74,6 +74,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scroll-snap-type: y proximity;
 }
 
 body {
@@ -369,6 +370,8 @@ code, .mono {
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
   position: relative;
   overflow: visible;
+  scroll-snap-align: start;
+  min-height: 100vh;
 }
 
 .hero::before {
@@ -730,9 +733,150 @@ code, .mono {
   color: white;
 }
 
-/* Section Styles */
+/* Section Styles - Scene-Based */
 .section {
   padding: var(--space-3xl) 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/* Scene entrance animations */
+.scene-content {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-active .scene-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered scene elements */
+.scene-content > *:nth-child(1) { transition-delay: 0s; }
+.scene-content > *:nth-child(2) { transition-delay: 0.1s; }
+.scene-content > *:nth-child(3) { transition-delay: 0.15s; }
+.scene-content > *:nth-child(4) { transition-delay: 0.2s; }
+
+/* Scene fade variations */
+.scene-fade-up {
+  opacity: 0;
+  transform: translateY(80px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-active .scene-fade-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scene-fade-scale {
+  opacity: 0;
+  transform: scale(0.9) translateY(40px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-active .scene-fade-scale {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Parallax depth layers */
+.scene-layer-back {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-layer-front {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scene divider - subtle gradient line between sections */
+.section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+  opacity: 0.5;
+}
+
+.section:last-of-type::after,
+.cta-section::after {
+  display: none;
+}
+
+/* Scene progress indicator (optional visual feedback) */
+.scene-indicator {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scene-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-light);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scene-indicator-dot.active {
+  background: var(--primary);
+  transform: scale(1.3);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+}
+
+/* Reduce motion for accessibility - scene animations */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  .scene-content,
+  .scene-fade-up,
+  .scene-fade-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .section::before,
+  .section::after {
+    display: none;
+  }
+}
+
+/* Mobile adjustments for scenes */
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .section {
+    min-height: auto;
+    padding: var(--space-2xl) 0;
+  }
+
+  .scene-indicator {
+    display: none;
+  }
 }
 
 .section-header {
@@ -839,6 +983,7 @@ code, .mono {
 /* Stats Section */
 .stats-section {
   background: var(--bg-secondary);
+  scroll-snap-align: center;
 }
 
 .stats-grid {
@@ -980,6 +1125,8 @@ code, .mono {
   text-align: center;
   position: relative;
   overflow: hidden;
+  scroll-snap-align: center;
+  min-height: 60vh;
 }
 
 .cta-section::before {
@@ -1284,6 +1431,7 @@ code, .mono {
   background: var(--bg-code);
   color: var(--text-secondary);
   padding: var(--space-3xl) 0 var(--space-lg);
+  scroll-snap-align: end;
 }
 
 .footer-content {

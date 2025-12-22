@@ -68,69 +68,124 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // ========================================
-  // Scroll-Triggered Animations
+  // Scene-Based Scroll Animations
   // ========================================
-  const scrollObserverOptions = {
+
+  // Scene observer - triggers when sections enter viewport
+  const sceneObserverOptions = {
     root: null,
-    rootMargin: '0px 0px -50px 0px',
-    threshold: 0.1
+    rootMargin: '-10% 0px -10% 0px',
+    threshold: [0, 0.2, 0.4, 0.6, 0.8, 1]
   };
 
-  const scrollObserver = new IntersectionObserver((entries) => {
+  const sceneObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.2) {
+        entry.target.classList.add('scene-active');
+      }
+    });
+  }, sceneObserverOptions);
+
+  // Mark all sections as scenes
+  document.querySelectorAll('.section, .hero, .cta-section, .footer').forEach(section => {
+    sceneObserver.observe(section);
+  });
+
+  // Hero is immediately active
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    hero.classList.add('scene-active');
+  }
+
+  // Element entrance observer for individual items
+  const elementObserverOptions = {
+    root: null,
+    rootMargin: '0px 0px -80px 0px',
+    threshold: 0.15
+  };
+
+  const elementObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        scrollObserver.unobserve(entry.target);
+        elementObserver.unobserve(entry.target);
       }
     });
-  }, scrollObserverOptions);
+  }, elementObserverOptions);
 
-  // Apply scroll-fade to sections
+  // Apply scene-fade-up to section headers
   document.querySelectorAll('.section-header').forEach(el => {
     el.classList.add('scroll-fade');
-    scrollObserver.observe(el);
+    elementObserver.observe(el);
   });
 
-  // Apply staggered fade to grids
+  // Apply staggered fade to grids with enhanced timing
   document.querySelectorAll('.audience-grid, .services-grid, .stats-grid, .blog-grid').forEach(el => {
     el.classList.add('scroll-fade-children');
-    scrollObserver.observe(el);
+    elementObserver.observe(el);
   });
 
   // Apply scroll-fade to individual cards (fallback)
   document.querySelectorAll('.service-card, .audience-card, .blog-card, .stat-card').forEach((el, index) => {
     if (!el.closest('.scroll-fade-children')) {
       el.classList.add('scroll-fade');
-      el.style.transitionDelay = `${index * 0.1}s`;
-      scrollObserver.observe(el);
+      el.style.transitionDelay = `${index * 0.12}s`;
+      elementObserver.observe(el);
     }
   });
 
   // Apply to CTA sections
   document.querySelectorAll('.cta-section .container, .contact-form').forEach(el => {
     el.classList.add('scroll-fade');
-    scrollObserver.observe(el);
+    elementObserver.observe(el);
   });
 
-  // Apply scale animation to featured elements
+  // Hero content is immediately visible
   document.querySelectorAll('.hero-content').forEach(el => {
     el.classList.add('scroll-scale');
-    el.classList.add('visible'); // Hero should be visible immediately
+    el.classList.add('visible');
   });
 
   // Apply to footer
   document.querySelectorAll('.footer-content').forEach(el => {
     el.classList.add('scroll-fade');
-    scrollObserver.observe(el);
+    elementObserver.observe(el);
   });
-
-  // AI diagram doesn't need scroll animation - it's in the hero section
 
   // Apply to page headers (for other pages)
   document.querySelectorAll('.page-header .container').forEach(el => {
     el.classList.add('scroll-fade');
-    el.classList.add('visible'); // Page headers should be visible immediately
+    el.classList.add('visible');
   });
+
+  // ========================================
+  // Smooth Scene Transitions with Parallax
+  // ========================================
+  let ticking = false;
+
+  function updateParallax() {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+
+    // Subtle parallax on diagram
+    const diagram = document.querySelector('.ai-diagram-wrapper');
+    if (diagram) {
+      const diagramRect = diagram.getBoundingClientRect();
+      if (diagramRect.top < windowHeight && diagramRect.bottom > 0) {
+        const parallaxOffset = (diagramRect.top / windowHeight) * 30;
+        diagram.style.transform = `translateY(${parallaxOffset}px)`;
+      }
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
 
   // Contact form handling
   const contactForm = document.getElementById('contactForm');
