@@ -221,11 +221,10 @@ code, .mono {
 
 /* Hero Section */
 .hero {
-  padding: var(--space-3xl) 0;
+  padding: var(--space-2xl) 0 0 0;
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
   position: relative;
   overflow: hidden;
-  min-height: 600px;
 }
 
 .hero::before {
@@ -236,35 +235,88 @@ code, .mono {
   right: 0;
   bottom: 0;
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+    radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(251, 146, 60, 0.06) 0%, transparent 40%);
   pointer-events: none;
 }
 
-/* AI Diagram Background */
-.ai-diagram-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  opacity: 0.7;
-  z-index: 1;
+.hero .container.hero-container {
+  position: relative;
+  z-index: 2;
+  display: block;
+  text-align: center;
+  padding-bottom: var(--space-xl);
+}
+
+.hero .container.hero-container .hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero .container.hero-container .hero-buttons {
+  justify-content: center;
+}
+
+/* AI Diagram Section */
+.ai-diagram-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
 }
 
 .ai-diagram {
   width: 100%;
-  height: 100%;
-  min-height: 600px;
+  height: auto;
+  min-height: 400px;
+  max-height: 500px;
 }
 
+/* Interactive Node Styles */
 .ai-diagram .node {
-  transition: transform 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.ai-diagram .node:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.ai-diagram .node:hover .node-bg {
+  filter: drop-shadow(0 8px 20px rgba(6, 182, 212, 0.25));
+}
+
+.ai-diagram .node-data:hover .node-bg {
+  stroke: var(--primary);
+  stroke-width: 3;
+}
+
+.ai-diagram .node-agent:hover .node-bg {
+  stroke: var(--primary);
+  stroke-width: 3;
+}
+
+.ai-diagram .node-output:hover .node-bg {
+  stroke: var(--accent);
+  stroke-width: 3;
 }
 
 .ai-diagram .node-bg {
+  transition: all 0.3s ease;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+}
+
+.ai-diagram .node-model {
+  cursor: pointer;
+}
+
+.ai-diagram .node-model:hover {
+  transform: scale(1.08);
+}
+
+.ai-diagram .node-model:hover .node-bg {
+  filter: drop-shadow(0 0 30px rgba(251, 146, 60, 0.5));
 }
 
 .ai-diagram .node-glow {
@@ -280,9 +332,11 @@ code, .mono {
   }
 }
 
+/* Flow Lines */
 .ai-diagram .flow-line {
   stroke-dasharray: 8 4;
   animation: flowDash 1.5s linear infinite;
+  transition: opacity 0.3s ease;
 }
 
 @keyframes flowDash {
@@ -291,10 +345,16 @@ code, .mono {
   }
 }
 
-.ai-diagram .particle {
-  opacity: 0.8;
+.ai-diagram .connections {
+  transition: opacity 0.3s ease;
 }
 
+/* Particles */
+.ai-diagram .particle {
+  opacity: 0.9;
+}
+
+/* Floating Decorations */
 .ai-diagram .float-circle {
   animation: floatCircle 6s ease-in-out infinite;
 }
@@ -318,10 +378,11 @@ code, .mono {
   animation-delay: -4s;
 }
 
-.hero .container.hero-container {
-  position: relative;
-  z-index: 2;
-  display: block;
+/* Column Labels */
+.ai-diagram .column-label {
+  font-family: var(--font-sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .hero .container {
@@ -1211,17 +1272,26 @@ code, .mono {
     overflow-x: auto;
   }
 
-  .ai-diagram-bg {
-    opacity: 0.3;
+  .ai-diagram-wrapper {
+    padding: 0;
+    overflow-x: auto;
   }
 
   .ai-diagram {
-    min-height: 400px;
+    min-height: 280px;
+    max-height: 350px;
   }
 
-  .ai-diagram .column-label,
+  .ai-diagram .column-label {
+    font-size: 10px;
+  }
+
   .ai-diagram .node text {
-    font-size: 8px;
+    font-size: 7px;
+  }
+
+  .ai-diagram .node {
+    transform: scale(0.9);
   }
 
   .hero-buttons {

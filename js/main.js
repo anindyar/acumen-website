@@ -158,6 +158,120 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('%c AI Consultancy for Dev Teams, Organisations & Government ', 'color: #06b6d4; font-size: 12px;');
   console.log('%c anindya@acumenlabs.co ', 'color: #94a3b8; font-size: 11px;');
 
+  // ========================================
+  // AI Diagram Interactivity
+  // ========================================
+  const aiDiagram = document.querySelector('.ai-diagram');
+  if (aiDiagram) {
+    const nodes = aiDiagram.querySelectorAll('.node');
+    const connections = aiDiagram.querySelector('.connections');
+    const particles = aiDiagram.querySelector('.particles');
+
+    // Node connection mapping
+    const nodeConnections = {
+      'data-inputs': ['flow-1', 'flow-2', 'flow-3'],
+      'models': ['flow-1', 'flow-2', 'flow-3', 'flow-4', 'flow-5', 'flow-6'],
+      'agents': ['flow-4', 'flow-5', 'flow-6', 'flow-7', 'flow-8', 'flow-9'],
+      'outputs': ['flow-7', 'flow-8', 'flow-9']
+    };
+
+    // Add hover effects to nodes
+    nodes.forEach(node => {
+      node.addEventListener('mouseenter', function() {
+        // Find which column this node belongs to
+        const column = this.closest('.diagram-column');
+        if (column && connections) {
+          const columnClass = column.classList[1]; // e.g., 'data-inputs', 'models', etc.
+          const relatedFlows = nodeConnections[columnClass] || [];
+
+          // Highlight related flow lines
+          connections.querySelectorAll('.flow-line').forEach(line => {
+            const lineClasses = Array.from(line.classList);
+            const isRelated = relatedFlows.some(flow => lineClasses.includes(flow));
+            if (isRelated) {
+              line.style.opacity = '1';
+              line.style.strokeWidth = '3';
+            } else {
+              line.style.opacity = '0.15';
+            }
+          });
+
+          // Highlight related particles
+          if (particles) {
+            particles.querySelectorAll('.particle').forEach(particle => {
+              const particleClasses = Array.from(particle.classList);
+              const particleNum = particleClasses.find(c => c.startsWith('particle-'));
+              if (particleNum) {
+                const flowNum = 'flow-' + particleNum.split('-')[1];
+                const isRelated = relatedFlows.includes(flowNum);
+                particle.style.opacity = isRelated ? '1' : '0.2';
+              }
+            });
+          }
+        }
+
+        // Dim other nodes
+        nodes.forEach(otherNode => {
+          if (otherNode !== this) {
+            otherNode.style.opacity = '0.5';
+          }
+        });
+      });
+
+      node.addEventListener('mouseleave', function() {
+        // Reset flow lines
+        if (connections) {
+          connections.querySelectorAll('.flow-line').forEach(line => {
+            line.style.opacity = '';
+            line.style.strokeWidth = '';
+          });
+        }
+
+        // Reset particles
+        if (particles) {
+          particles.querySelectorAll('.particle').forEach(particle => {
+            particle.style.opacity = '';
+          });
+        }
+
+        // Reset other nodes
+        nodes.forEach(otherNode => {
+          otherNode.style.opacity = '';
+        });
+      });
+
+      // Add click interaction - pulse effect
+      node.addEventListener('click', function() {
+        this.style.animation = 'nodePulse 0.4s ease';
+        setTimeout(() => {
+          this.style.animation = '';
+        }, 400);
+      });
+    });
+
+    // Add entrance animation for diagram
+    const diagramObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Stagger animate columns
+          const columns = aiDiagram.querySelectorAll('.diagram-column');
+          columns.forEach((col, index) => {
+            col.style.opacity = '0';
+            col.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+              col.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              col.style.opacity = '1';
+              col.style.transform = 'translateY(0)';
+            }, index * 150);
+          });
+          diagramObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    diagramObserver.observe(aiDiagram);
+  }
+
 });
 
 // Add keyframe animation style dynamically
@@ -172,6 +286,11 @@ style.textContent = `
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  @keyframes nodePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
   }
 `;
 document.head.appendChild(style);
