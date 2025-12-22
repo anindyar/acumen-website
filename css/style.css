@@ -11,17 +11,17 @@
   --accent-dark: #f97316;
   --accent-light: #fdba74;
 
-  /* Dark Grey Backgrounds */
-  --bg-primary: #1a1a1f;
-  --bg-secondary: #212127;
-  --bg-tertiary: #2a2a32;
-  --bg-code: #141418;
+  /* Dark Grey Backgrounds - Lighter for better contrast */
+  --bg-primary: #252530;
+  --bg-secondary: #2e2e3a;
+  --bg-tertiary: #383845;
+  --bg-code: #1e1e26;
 
   /* Off-white Text */
   --text-primary: #f5f5f7;
   --text-secondary: #b4b4bc;
   --text-muted: #8a8a94;
-  --text-inverse: #1a1a1f;
+  --text-inverse: #252530;
 
   /* Semantic */
   --success: #10b981;
@@ -60,8 +60,8 @@
   --shadow-xl: 0 20px 40px -10px rgb(0 0 0 / 0.5), 0 8px 16px -8px rgb(0 0 0 / 0.4);
 
   /* Border Colors - Dark Theme */
-  --border-light: #3a3a42;
-  --border-medium: #4a4a54;
+  --border-light: #454552;
+  --border-medium: #555562;
 }
 
 /* Reset & Base */
@@ -129,7 +129,7 @@ code, .mono {
 
 /* Navigation */
 .navbar {
-  background: rgba(26, 26, 31, 0.92);
+  background: rgba(37, 37, 48, 0.95);
   border-bottom: 1px solid var(--border-light);
   position: sticky;
   top: 0;
