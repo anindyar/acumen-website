@@ -211,77 +211,29 @@ document.addEventListener('DOMContentLoaded', function() {
       'outputs': ['flow-7', 'flow-8', 'flow-9']
     };
 
-    // Add hover effects to nodes
+    // Simple hover effects - just highlight connections
     nodes.forEach(node => {
       node.addEventListener('mouseenter', function() {
-        // Find which column this node belongs to
         const column = this.closest('.diagram-column');
         if (column && connections) {
-          const columnClass = column.classList[1]; // e.g., 'data-inputs', 'models', etc.
+          const columnClass = column.classList[1];
           const relatedFlows = nodeConnections[columnClass] || [];
 
-          // Highlight related flow lines
+          // Subtle highlight of related flow lines
           connections.querySelectorAll('.flow-line').forEach(line => {
             const lineClasses = Array.from(line.classList);
             const isRelated = relatedFlows.some(flow => lineClasses.includes(flow));
-            if (isRelated) {
-              line.style.opacity = '1';
-              line.style.strokeWidth = '3';
-            } else {
-              line.style.opacity = '0.15';
-            }
+            line.style.opacity = isRelated ? '0.6' : '0.1';
           });
-
-          // Highlight related particles
-          if (particles) {
-            particles.querySelectorAll('.particle').forEach(particle => {
-              const particleClasses = Array.from(particle.classList);
-              const particleNum = particleClasses.find(c => c.startsWith('particle-'));
-              if (particleNum) {
-                const flowNum = 'flow-' + particleNum.split('-')[1];
-                const isRelated = relatedFlows.includes(flowNum);
-                particle.style.opacity = isRelated ? '1' : '0.2';
-              }
-            });
-          }
         }
-
-        // Dim other nodes
-        nodes.forEach(otherNode => {
-          if (otherNode !== this) {
-            otherNode.style.opacity = '0.5';
-          }
-        });
       });
 
       node.addEventListener('mouseleave', function() {
-        // Reset flow lines
         if (connections) {
           connections.querySelectorAll('.flow-line').forEach(line => {
             line.style.opacity = '';
-            line.style.strokeWidth = '';
           });
         }
-
-        // Reset particles
-        if (particles) {
-          particles.querySelectorAll('.particle').forEach(particle => {
-            particle.style.opacity = '';
-          });
-        }
-
-        // Reset other nodes
-        nodes.forEach(otherNode => {
-          otherNode.style.opacity = '';
-        });
-      });
-
-      // Add click interaction - pulse effect
-      node.addEventListener('click', function() {
-        this.style.animation = 'nodePulse 0.4s ease';
-        setTimeout(() => {
-          this.style.animation = '';
-        }, 400);
       });
     });
 
