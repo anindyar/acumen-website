@@ -384,6 +384,62 @@ code, .mono {
   padding-bottom: var(--space-3xl);
 }
 
+/* Animated Code Background */
+.code-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.code-char {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--primary);
+  opacity: 0;
+  animation: codeFloat 8s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+  user-select: none;
+}
+
+.code-char.accent {
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(251, 146, 60, 0.3);
+}
+
+@keyframes codeFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.8);
+  }
+}
+
+/* Reduce animation for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .code-rain {
+    display: none;
+  }
+}
+
 .hero-fullscreen .hero-container {
   flex: 1;
   display: flex;

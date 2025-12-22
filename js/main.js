@@ -1,6 +1,64 @@
 // Acumen Labs - Main JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+  // ========================================
+  // Animated Code Background
+  // ========================================
+  const codeRain = document.querySelector('.code-rain');
+  if (codeRain) {
+    const codeChars = [
+      '{', '}', '(', ')', '[', ']', '<', '>', '/',
+      'const', 'let', 'function', 'return', 'async', 'await',
+      'if', 'else', 'for', 'import', 'export', 'class',
+      '=>', '===', '&&', '||', '...', '++', '--',
+      'AI', 'ML', 'API', 'data', 'model', 'train',
+      '0', '1', 'true', 'false', 'null', 'void',
+      'def', 'self', 'import', 'from', 'as',
+      '{ }', '( )', '< >', '[ ]', '; ', ': ',
+    ];
+
+    const charCount = 35;
+
+    function createCodeChar() {
+      const char = document.createElement('span');
+      char.className = 'code-char' + (Math.random() > 0.7 ? ' accent' : '');
+      char.textContent = codeChars[Math.floor(Math.random() * codeChars.length)];
+
+      // Random position
+      char.style.left = Math.random() * 100 + '%';
+      char.style.top = Math.random() * 100 + '%';
+
+      // Random animation duration and delay
+      const duration = 6 + Math.random() * 8;
+      const delay = Math.random() * 10;
+      char.style.animationDuration = duration + 's';
+      char.style.animationDelay = delay + 's';
+
+      // Random size variation
+      const size = 12 + Math.random() * 6;
+      char.style.fontSize = size + 'px';
+
+      return char;
+    }
+
+    // Create initial characters
+    for (let i = 0; i < charCount; i++) {
+      codeRain.appendChild(createCodeChar());
+    }
+
+    // Periodically refresh some characters for variety
+    setInterval(() => {
+      const chars = codeRain.querySelectorAll('.code-char');
+      if (chars.length > 0) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        const oldChar = chars[randomIndex];
+        const newChar = createCodeChar();
+        newChar.style.animationDelay = '0s';
+        codeRain.replaceChild(newChar, oldChar);
+      }
+    }, 3000);
+  }
+
   // Mobile Navigation Toggle
   const navToggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
