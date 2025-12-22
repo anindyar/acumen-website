@@ -67,33 +67,73 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Animate elements on scroll
-  const observerOptions = {
+  // ========================================
+  // Scroll-Triggered Animations
+  // ========================================
+  const scrollObserverOptions = {
     root: null,
-    rootMargin: '0px',
+    rootMargin: '0px 0px -50px 0px',
     threshold: 0.1
   };
 
-  const observer = new IntersectionObserver((entries) => {
+  const scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-in');
-        observer.unobserve(entry.target);
+        entry.target.classList.add('visible');
+        scrollObserver.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, scrollObserverOptions);
 
-  // Observe cards and sections
-  document.querySelectorAll('.service-card, .audience-card, .blog-card, .stat-card').forEach(el => {
-    el.style.opacity = '0';
-    observer.observe(el);
+  // Apply scroll-fade to sections
+  document.querySelectorAll('.section-header').forEach(el => {
+    el.classList.add('scroll-fade');
+    scrollObserver.observe(el);
   });
 
-  // Terminal typing effect (optional enhancement)
-  const terminalLines = document.querySelectorAll('.terminal-line, .terminal-output');
-  terminalLines.forEach((line, index) => {
-    line.style.opacity = '0';
-    line.style.animation = `fadeInUp 0.3s ease forwards ${index * 0.1}s`;
+  // Apply staggered fade to grids
+  document.querySelectorAll('.audience-grid, .services-grid, .stats-grid, .blog-grid').forEach(el => {
+    el.classList.add('scroll-fade-children');
+    scrollObserver.observe(el);
+  });
+
+  // Apply scroll-fade to individual cards (fallback)
+  document.querySelectorAll('.service-card, .audience-card, .blog-card, .stat-card').forEach((el, index) => {
+    if (!el.closest('.scroll-fade-children')) {
+      el.classList.add('scroll-fade');
+      el.style.transitionDelay = `${index * 0.1}s`;
+      scrollObserver.observe(el);
+    }
+  });
+
+  // Apply to CTA sections
+  document.querySelectorAll('.cta-section .container, .contact-form').forEach(el => {
+    el.classList.add('scroll-fade');
+    scrollObserver.observe(el);
+  });
+
+  // Apply scale animation to featured elements
+  document.querySelectorAll('.hero-content').forEach(el => {
+    el.classList.add('scroll-scale');
+    el.classList.add('visible'); // Hero should be visible immediately
+  });
+
+  // Apply to footer
+  document.querySelectorAll('.footer-content').forEach(el => {
+    el.classList.add('scroll-fade');
+    scrollObserver.observe(el);
+  });
+
+  // Apply to AI diagram
+  document.querySelectorAll('.ai-diagram-wrapper').forEach(el => {
+    el.classList.add('scroll-scale');
+    scrollObserver.observe(el);
+  });
+
+  // Apply to page headers (for other pages)
+  document.querySelectorAll('.page-header .container').forEach(el => {
+    el.classList.add('scroll-fade');
+    el.classList.add('visible'); // Page headers should be visible immediately
   });
 
   // Contact form handling
