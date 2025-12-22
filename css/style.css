@@ -1,26 +1,28 @@
-/* Acumen Labs - Clean Bright Nerdy Theme */
+/* Acumen Labs - Dark Minimalist AI Lab Theme */
 
 :root {
-  /* Primary Colors - Aquamarine (cyan-blue) */
+  /* Primary Colors - Cyan/Teal */
   --primary: #06b6d4;
   --primary-dark: #0891b2;
   --primary-light: #22d3ee;
 
-  /* Accent Colors - Light Orange */
-  --accent: #fb923c;
-  --accent-dark: #f97316;
-  --accent-light: #fdba74;
+  /* Accent Colors - Subtle Orange */
+  --accent: #f97316;
+  --accent-dark: #ea580c;
+  --accent-light: #fb923c;
 
-  /* Neutrals */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --bg-code: #1e293b;
+  /* Dark Theme Backgrounds */
+  --bg-primary: #0a0a0b;
+  --bg-secondary: #111113;
+  --bg-tertiary: #18181b;
+  --bg-elevated: #1f1f23;
+  --bg-code: #0d0d0f;
 
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --text-inverse: #f8fafc;
+  /* Off-white Text */
+  --text-primary: #f0f0f2;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-inverse: #0a0a0b;
 
   /* Semantic */
   --success: #10b981;
@@ -30,8 +32,8 @@
   /* Code/Terminal */
   --terminal-green: #22d3ee;
   --terminal-blue: #06b6d4;
-  --terminal-purple: #fb923c;
-  --terminal-yellow: #fdba74;
+  --terminal-purple: #a78bfa;
+  --terminal-yellow: #fbbf24;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -46,21 +48,22 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 
-  /* Borders & Shadows - Refined */
+  /* Borders & Shadows - Dark Theme */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.25rem;
   --radius-2xl: 1.5rem;
 
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-lg: 0 10px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
-  --shadow-xl: 0 20px 40px -10px rgb(0 0 0 / 0.12), 0 8px 16px -8px rgb(0 0 0 / 0.06);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 20px 40px -10px rgb(0 0 0 / 0.6), 0 8px 16px -8px rgb(0 0 0 / 0.5);
+  --shadow-glow: 0 0 20px rgb(6 182 212 / 0.15);
 
-  /* Border Colors - Softer */
-  --border-light: #e2e8f0;
-  --border-medium: #cbd5e1;
+  /* Border Colors - Dark Theme */
+  --border-light: #27272a;
+  --border-medium: #3f3f46;
 }
 
 /* Reset & Base */
@@ -83,6 +86,48 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Animated Grid Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(60px, 60px);
+  }
+}
+
+/* Subtle gradient overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(249, 115, 22, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Typography - Refined */
@@ -128,13 +173,12 @@ code, .mono {
 
 /* Navigation */
 .navbar {
-  background: var(--bg-primary);
+  background: rgba(10, 10, 11, 0.85);
   border-bottom: 1px solid var(--border-light);
   position: sticky;
   top: 0;
   z-index: 1000;
   backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.92);
 }
 
 .navbar .container {
@@ -559,14 +603,14 @@ code, .mono {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.25);
+  color: var(--text-inverse);
+  box-shadow: 0 4px 14px 0 rgba(6, 182, 212, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.35);
-  color: white;
+  box-shadow: 0 6px 20px 0 rgba(6, 182, 212, 0.45);
+  color: var(--text-inverse);
 }
 
 .btn-secondary {
@@ -650,8 +694,8 @@ code, .mono {
 }
 
 .service-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(99, 102, 241, 0.1);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(6, 182, 212, 0.1);
   transform: translateY(-2px);
 }
 
@@ -662,7 +706,7 @@ code, .mono {
 .service-icon {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(249, 115, 22, 0.1));
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
@@ -749,8 +793,8 @@ code, .mono {
 }
 
 .audience-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: var(--shadow-lg);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(6, 182, 212, 0.1);
   transform: translateY(-2px);
 }
 
@@ -846,8 +890,8 @@ code, .mono {
 }
 
 .blog-card:hover {
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: var(--shadow-lg);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(6, 182, 212, 0.1);
   transform: translateY(-2px);
 }
 
@@ -876,7 +920,7 @@ code, .mono {
 }
 
 .blog-tag {
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(6, 182, 212, 0.15);
   color: var(--primary);
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-sm);
@@ -1146,7 +1190,7 @@ code, .mono {
 
 .footer-bottom {
   padding-top: var(--space-lg);
-  border-top: 1px solid #334155;
+  border-top: 1px solid var(--border-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
