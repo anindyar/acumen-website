@@ -335,35 +335,34 @@ code, .mono {
 /* Interactive Node Styles */
 .ai-diagram .node {
   cursor: pointer;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
 }
 
 .ai-diagram .node:hover {
-  transform: translateY(-4px) scale(1.05);
+  transform: translateY(-6px) scale(1.03);
 }
 
 .ai-diagram .node:hover .node-bg {
-  filter: drop-shadow(0 8px 20px rgba(6, 182, 212, 0.25));
+  filter: drop-shadow(0 12px 24px rgba(6, 182, 212, 0.2));
 }
 
 .ai-diagram .node-data:hover .node-bg {
   stroke: var(--primary);
-  stroke-width: 3;
+  stroke-width: 2;
 }
 
 .ai-diagram .node-agent:hover .node-bg {
   stroke: var(--primary);
-  stroke-width: 3;
+  stroke-width: 2;
 }
 
 .ai-diagram .node-output:hover .node-bg {
   stroke: var(--accent);
-  stroke-width: 3;
+  stroke-width: 2;
 }
 
 .ai-diagram .node-bg {
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ai-diagram .node-model {
@@ -371,15 +370,59 @@ code, .mono {
 }
 
 .ai-diagram .node-model:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
 .ai-diagram .node-model:hover .node-bg {
-  filter: drop-shadow(0 0 30px rgba(251, 146, 60, 0.5));
+  filter: drop-shadow(0 0 25px rgba(251, 146, 60, 0.4));
 }
 
 .ai-diagram .node-glow {
-  animation: nodeGlow 3s ease-in-out infinite;
+  animation: nodeGlow 4s ease-in-out infinite;
+}
+
+/* Tooltip styling for diagram nodes */
+.ai-diagram .node title {
+  font-size: 12px;
+}
+
+/* Custom tooltip on hover */
+.ai-diagram-wrapper {
+  position: relative;
+}
+
+.diagram-tooltip {
+  position: absolute;
+  background: var(--bg-code);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  max-width: 220px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-light);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 100;
+  line-height: 1.4;
+}
+
+.diagram-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.diagram-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: var(--bg-code) transparent transparent;
 }
 
 @keyframes nodeGlow {
@@ -393,9 +436,17 @@ code, .mono {
 
 /* Flow Lines */
 .ai-diagram .flow-line {
-  stroke-dasharray: 8 4;
-  animation: flowDash 1.5s linear infinite;
-  transition: opacity 0.3s ease;
+  stroke-dasharray: 6 8;
+  animation: flowDash 3s linear infinite;
+  transition: opacity 0.4s ease, stroke-width 0.4s ease;
+}
+
+.ai-diagram:hover .flow-line {
+  opacity: 0.4;
+}
+
+.ai-diagram .connections:hover .flow-line {
+  stroke-width: 2;
 }
 
 @keyframes flowDash {

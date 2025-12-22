@@ -249,6 +249,49 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
+    // Create and manage tooltips
+    const diagramWrapper = document.querySelector('.ai-diagram-wrapper');
+    if (diagramWrapper) {
+      // Create tooltip element
+      const tooltip = document.createElement('div');
+      tooltip.className = 'diagram-tooltip';
+      diagramWrapper.appendChild(tooltip);
+
+      nodes.forEach(node => {
+        const titleElement = node.querySelector('title');
+        if (titleElement) {
+          const tooltipText = titleElement.textContent;
+
+          node.addEventListener('mouseenter', function(e) {
+            tooltip.textContent = tooltipText;
+            tooltip.classList.add('visible');
+            updateTooltipPosition(e);
+          });
+
+          node.addEventListener('mousemove', updateTooltipPosition);
+
+          node.addEventListener('mouseleave', function() {
+            tooltip.classList.remove('visible');
+          });
+        }
+      });
+
+      function updateTooltipPosition(e) {
+        const wrapperRect = diagramWrapper.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+
+        let left = e.clientX - wrapperRect.left - (tooltipRect.width / 2);
+        let top = e.clientY - wrapperRect.top - tooltipRect.height - 15;
+
+        // Keep tooltip within bounds
+        left = Math.max(10, Math.min(left, wrapperRect.width - tooltipRect.width - 10));
+        top = Math.max(10, top);
+
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+      }
+    }
+
     // Add entrance animation for diagram
     const diagramObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
