@@ -195,50 +195,13 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('%c anindya@acumenlabs.co ', 'color: #94a3b8; font-size: 11px;');
 
   // ========================================
-  // AI Diagram Interactivity
+  // AI Diagram Tooltips Only
   // ========================================
   const aiDiagram = document.querySelector('.ai-diagram');
   if (aiDiagram) {
     const nodes = aiDiagram.querySelectorAll('.node');
-    const connections = aiDiagram.querySelector('.connections');
-    const particles = aiDiagram.querySelector('.particles');
-
-    // Node connection mapping
-    const nodeConnections = {
-      'data-inputs': ['flow-1', 'flow-2', 'flow-3'],
-      'models': ['flow-1', 'flow-2', 'flow-3', 'flow-4', 'flow-5', 'flow-6'],
-      'agents': ['flow-4', 'flow-5', 'flow-6', 'flow-7', 'flow-8', 'flow-9'],
-      'outputs': ['flow-7', 'flow-8', 'flow-9']
-    };
-
-    // Simple hover effects - just highlight connections
-    nodes.forEach(node => {
-      node.addEventListener('mouseenter', function() {
-        const column = this.closest('.diagram-column');
-        if (column && connections) {
-          const columnClass = column.classList[1];
-          const relatedFlows = nodeConnections[columnClass] || [];
-
-          // Subtle highlight of related flow lines
-          connections.querySelectorAll('.flow-line').forEach(line => {
-            const lineClasses = Array.from(line.classList);
-            const isRelated = relatedFlows.some(flow => lineClasses.includes(flow));
-            line.style.opacity = isRelated ? '0.6' : '0.1';
-          });
-        }
-      });
-
-      node.addEventListener('mouseleave', function() {
-        if (connections) {
-          connections.querySelectorAll('.flow-line').forEach(line => {
-            line.style.opacity = '';
-          });
-        }
-      });
-    });
-
-    // Create and manage tooltips
     const diagramWrapper = document.querySelector('.ai-diagram-wrapper');
+
     if (diagramWrapper) {
       // Create tooltip element
       const tooltip = document.createElement('div');
@@ -279,7 +242,6 @@ document.addEventListener('DOMContentLoaded', function() {
         tooltip.style.top = top + 'px';
       }
     }
-
   }
 
 });

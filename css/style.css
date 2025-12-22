@@ -423,26 +423,11 @@ code, .mono {
 }
 
 .ai-diagram .node .node-bg {
-  transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .ai-diagram .node:hover .node-bg {
-  stroke: var(--primary);
-  stroke-width: 2.5;
-}
-
-.ai-diagram .node-model:hover .node-bg {
-  stroke: var(--accent);
-  stroke-width: 3;
-}
-
-.ai-diagram .node-output:hover .node-bg {
-  stroke: var(--accent);
-  stroke-width: 2.5;
-}
-
-.ai-diagram .node-glow {
-  animation: nodeGlow 4s ease-in-out infinite;
+  opacity: 0.85;
 }
 
 /* Tooltip styling for diagram nodes */
@@ -489,38 +474,17 @@ code, .mono {
   border-color: var(--bg-code) transparent transparent;
 }
 
-@keyframes nodeGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 8px rgba(251, 146, 60, 0.3));
-  }
-  50% {
-    filter: drop-shadow(0 0 20px rgba(251, 146, 60, 0.5));
-  }
-}
 
 /* Flow Lines */
 .ai-diagram .flow-line {
   stroke-dasharray: 6 8;
   animation: flowDash 3s linear infinite;
-  transition: opacity 0.4s ease, stroke-width 0.4s ease;
-}
-
-.ai-diagram:hover .flow-line {
-  opacity: 0.4;
-}
-
-.ai-diagram .connections:hover .flow-line {
-  stroke-width: 2;
 }
 
 @keyframes flowDash {
   to {
     stroke-dashoffset: -24;
   }
-}
-
-.ai-diagram .connections {
-  transition: opacity 0.3s ease;
 }
 
 /* Particles */
