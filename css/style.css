@@ -169,6 +169,8 @@ code, .mono {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-lg);
+  position: relative;
+  z-index: 1;
 }
 
 /* Navigation */
@@ -269,6 +271,7 @@ code, .mono {
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .hero::before {
@@ -641,6 +644,8 @@ code, .mono {
 /* Section Styles */
 .section {
   padding: var(--space-3xl) 0;
+  position: relative;
+  z-index: 1;
 }
 
 .section-header {
@@ -1147,6 +1152,8 @@ code, .mono {
   background: var(--bg-code);
   color: var(--text-inverse);
   padding: var(--space-3xl) 0 var(--space-lg);
+  position: relative;
+  z-index: 1;
 }
 
 .footer-content {

@@ -294,3 +294,75 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+// ========================================
+// Reactive Cursor Glow Effect
+// ========================================
+(function() {
+  // Create cursor glow element
+  const cursorGlow = document.createElement('div');
+  cursorGlow.className = 'cursor-glow';
+  document.body.appendChild(cursorGlow);
+
+  // Add styles for cursor glow
+  const glowStyle = document.createElement('style');
+  glowStyle.textContent = `
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, rgba(6, 182, 212, 0.03) 40%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .cursor-glow.active {
+      opacity: 1;
+    }
+    @media (max-width: 768px) {
+      .cursor-glow {
+        display: none;
+      }
+    }
+  `;
+  document.head.appendChild(glowStyle);
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let glowX = 0;
+  let glowY = 0;
+  let isActive = false;
+
+  // Track mouse position
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!isActive) {
+      isActive = true;
+      cursorGlow.classList.add('active');
+    }
+  });
+
+  // Hide when mouse leaves window
+  document.addEventListener('mouseleave', function() {
+    isActive = false;
+    cursorGlow.classList.remove('active');
+  });
+
+  // Smooth animation loop
+  function animateGlow() {
+    // Smooth follow with easing
+    glowX += (mouseX - glowX) * 0.1;
+    glowY += (mouseY - glowY) * 0.1;
+
+    cursorGlow.style.left = glowX + 'px';
+    cursorGlow.style.top = glowY + 'px';
+
+    requestAnimationFrame(animateGlow);
+  }
+
+  animateGlow();
+})();
