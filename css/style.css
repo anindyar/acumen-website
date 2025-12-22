@@ -405,16 +405,17 @@ code, .mono {
 .ai-diagram-wrapper {
   position: relative;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-md);
+  overflow: hidden;
 }
 
 .ai-diagram {
   width: 100%;
   height: auto;
-  min-height: 400px;
-  max-height: 500px;
+  min-height: 350px;
+  display: block;
 }
 
 /* Interactive Node Styles */
@@ -1465,6 +1466,19 @@ code, .mono {
   .footer-content {
     grid-template-columns: 1fr 1fr;
   }
+
+  .ai-diagram-wrapper {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .ai-diagram {
+    min-height: 300px;
+  }
+
+  .ai-diagram .decorations {
+    opacity: 0.1;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1512,24 +1526,29 @@ code, .mono {
 
   .ai-diagram-wrapper {
     padding: 0;
-    overflow-x: auto;
+    margin: 0 -1rem;
+    width: calc(100% + 2rem);
+    overflow: hidden;
   }
 
   .ai-diagram {
-    min-height: 280px;
-    max-height: 350px;
+    min-height: 250px;
+    width: 100%;
+    min-width: 600px;
+    margin: 0 auto;
   }
 
   .ai-diagram .column-label {
-    font-size: 10px;
-  }
-
-  .ai-diagram .node text {
-    font-size: 7px;
+    font-size: 9px;
   }
 
   .ai-diagram .node {
-    transform: scale(0.9);
+    pointer-events: none;
+  }
+
+  .ai-diagram .particles,
+  .ai-diagram .decorations {
+    display: none;
   }
 
   .hero-buttons {
@@ -1561,6 +1580,17 @@ code, .mono {
   .audience-benefits,
   .founder-credentials {
     text-align: left;
+  }
+}
+
+/* Very small screens - simplify diagram */
+@media (max-width: 480px) {
+  .ai-diagram-wrapper {
+    display: none;
+  }
+
+  .hero-content {
+    padding-bottom: var(--space-xl);
   }
 }
 
