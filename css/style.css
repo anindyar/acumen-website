@@ -460,7 +460,7 @@ code, .mono {
 }
 
 .terminal-header {
-  background: #334155;
+  background: var(--bg-tertiary);
   padding: var(--space-sm) var(--space-md);
   display: flex;
   align-items: center;
@@ -1146,7 +1146,7 @@ code, .mono {
 
 .footer-bottom {
   padding-top: var(--space-lg);
-  border-top: 1px solid #334155;
+  border-top: 1px solid var(--border-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1162,7 +1162,7 @@ code, .mono {
 .social-links a {
   width: 40px;
   height: 40px;
-  background: #334155;
+  background: var(--bg-tertiary);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
@@ -1394,7 +1394,7 @@ code, .mono {
 .conversation-header .status-dot {
   width: 10px;
   height: 10px;
-  background: #4ade80;
+  background: var(--success);
   border-radius: 50%;
   animation: pulse 2s infinite;
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.3);
@@ -1563,7 +1563,7 @@ code, .mono {
 }
 
 .quotes-header {
-  background: #334155;
+  background: var(--bg-tertiary);
   padding: 0.75rem 1.25rem;
   display: flex;
   align-items: center;
@@ -1604,7 +1604,7 @@ code, .mono {
 }
 
 .line-number {
-  color: #64748b;
+  color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   flex-shrink: 0;
@@ -1619,7 +1619,7 @@ code, .mono {
 }
 
 .quote-text {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.05rem;
   line-height: 1.6;
   font-family: var(--font-mono);
@@ -1654,7 +1654,7 @@ code, .mono {
 
 .quote-divider {
   height: 1px;
-  background: #334155;
+  background: var(--border-light);
   margin: 1.25rem 0;
 }
 
@@ -1678,11 +1678,11 @@ code, .mono {
 }
 
 .stat-text {
-  color: #94a3b8;
+  color: var(--text-secondary);
 }
 
 .quotes-footer {
-  background: #334155;
+  background: var(--bg-tertiary);
   padding: 0.75rem 1.25rem;
   display: flex;
   justify-content: space-between;
@@ -1698,7 +1698,7 @@ code, .mono {
 .quote-progress {
   width: 100px;
   height: 3px;
-  background: #475569;
+  background: var(--border-medium);
   border-radius: 2px;
   overflow: hidden;
 }
