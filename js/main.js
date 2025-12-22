@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }, sceneObserverOptions);
 
   // Mark all sections as scenes
-  document.querySelectorAll('.section, .hero, .cta-section, .footer').forEach(section => {
+  document.querySelectorAll('.section, .hero, .diagram-section, .cta-section, .footer').forEach(section => {
     sceneObserver.observe(section);
   });
 
@@ -95,6 +95,34 @@ document.addEventListener('DOMContentLoaded', function() {
   const hero = document.querySelector('.hero');
   if (hero) {
     hero.classList.add('scene-active');
+  }
+
+  // Scroll indicator click handler
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  const diagramSection = document.querySelector('.diagram-section');
+  if (scrollIndicator && diagramSection) {
+    scrollIndicator.addEventListener('click', () => {
+      diagramSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  // Hide scroll indicator when scrolled past hero
+  if (scrollIndicator) {
+    const heroSection = document.querySelector('.hero-fullscreen');
+    if (heroSection) {
+      const hideIndicatorObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.8) {
+            scrollIndicator.style.opacity = '1';
+            scrollIndicator.style.pointerEvents = 'auto';
+          } else {
+            scrollIndicator.style.opacity = '0';
+            scrollIndicator.style.pointerEvents = 'none';
+          }
+        });
+      }, { threshold: [0, 0.5, 0.8, 1] });
+      hideIndicatorObserver.observe(heroSection);
+    }
   }
 
   // Element entrance observer for individual items
