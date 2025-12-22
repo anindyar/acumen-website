@@ -124,10 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
     scrollObserver.observe(el);
   });
 
-  // Apply to AI diagram
+  // Apply to AI diagram - make visible immediately since it's in hero
   document.querySelectorAll('.ai-diagram-wrapper').forEach(el => {
-    el.classList.add('scroll-scale');
-    scrollObserver.observe(el);
+    el.classList.add('scroll-fade');
+    el.classList.add('visible'); // Visible immediately since in hero section
   });
 
   // Apply to page headers (for other pages)
@@ -332,27 +332,23 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // Add entrance animation for diagram
-    const diagramObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Stagger animate columns
-          const columns = aiDiagram.querySelectorAll('.diagram-column');
-          columns.forEach((col, index) => {
-            col.style.opacity = '0';
-            col.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-              col.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-              col.style.opacity = '1';
-              col.style.transform = 'translateY(0)';
-            }, index * 150);
-          });
-          diagramObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+    // Stagger animate diagram columns on page load
+    const columns = aiDiagram.querySelectorAll('.diagram-column');
+    columns.forEach((col, index) => {
+      col.style.opacity = '0';
+      col.style.transform = 'translateY(20px)';
+    });
 
-    diagramObserver.observe(aiDiagram);
+    // Trigger animation after a brief delay for page load
+    setTimeout(() => {
+      columns.forEach((col, index) => {
+        setTimeout(() => {
+          col.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          col.style.opacity = '1';
+          col.style.transform = 'translateY(0)';
+        }, index * 150);
+      });
+    }, 300);
   }
 
 });
