@@ -303,6 +303,15 @@ code, .mono {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.02em;
+  transition: all 0.3s ease;
+}
+
+.logo:hover span {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.5));
 }
 
 .logo-icon {
