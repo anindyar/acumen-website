@@ -384,7 +384,7 @@ code, .mono {
   padding-bottom: var(--space-3xl);
 }
 
-/* Animated Code Background */
+/* Animated Code Background - Scrolling Code Lines */
 .code-rain {
   position: absolute;
   top: 0;
@@ -394,42 +394,74 @@ code, .mono {
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.4;
 }
 
-.code-char {
+.code-column {
   position: absolute;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  color: var(--primary);
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  animation: codeScroll linear infinite;
   opacity: 0;
-  animation: codeFloat 8s ease-in-out infinite;
-  text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-  user-select: none;
 }
 
-.code-char.accent {
+.code-column.visible {
+  opacity: 1;
+  transition: opacity 1.5s ease-in;
+}
+
+.code-line {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* Syntax highlighting colors - very subtle */
+.code-line .keyword {
+  color: var(--primary);
+  opacity: 0.25;
+}
+
+.code-line .function {
   color: var(--accent);
-  text-shadow: 0 0 10px rgba(251, 146, 60, 0.3);
+  opacity: 0.2;
 }
 
-@keyframes codeFloat {
+.code-line .string {
+  color: #a5d6a7;
+  opacity: 0.18;
+}
+
+.code-line .comment {
+  color: var(--text-muted);
+  opacity: 0.15;
+  font-style: italic;
+}
+
+.code-line .operator {
+  color: var(--primary-light);
+  opacity: 0.2;
+}
+
+.code-line .variable {
+  color: var(--text-secondary);
+  opacity: 0.18;
+}
+
+.code-line .number {
+  color: var(--accent-light);
+  opacity: 0.2;
+}
+
+@keyframes codeScroll {
   0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.8);
-  }
-  10% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 0.4;
-  }
-  90% {
-    opacity: 0.6;
+    transform: translateY(0);
   }
   100% {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.8);
+    transform: translateY(-50%);
   }
 }
 

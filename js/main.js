@@ -2,61 +2,97 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   // ========================================
-  // Animated Code Background
+  // Animated Code Background - Scrolling Lines
   // ========================================
   const codeRain = document.querySelector('.code-rain');
   if (codeRain) {
-    const codeChars = [
-      '{', '}', '(', ')', '[', ']', '<', '>', '/',
-      'const', 'let', 'function', 'return', 'async', 'await',
-      'if', 'else', 'for', 'import', 'export', 'class',
-      '=>', '===', '&&', '||', '...', '++', '--',
-      'AI', 'ML', 'API', 'data', 'model', 'train',
-      '0', '1', 'true', 'false', 'null', 'void',
-      'def', 'self', 'import', 'from', 'as',
-      '{ }', '( )', '< >', '[ ]', '; ', ': ',
+    // Real code snippets with syntax highlighting
+    const codeSnippets = [
+      // AI/ML themed
+      '<span class="keyword">async</span> <span class="function">trainModel</span>(<span class="variable">data</span>) {',
+      '  <span class="keyword">const</span> <span class="variable">model</span> <span class="operator">=</span> <span class="keyword">await</span> <span class="function">loadModel</span>();',
+      '  <span class="keyword">return</span> <span class="variable">model</span>.<span class="function">fit</span>(<span class="variable">data</span>);',
+      '}',
+      '',
+      '<span class="keyword">const</span> <span class="variable">prediction</span> <span class="operator">=</span> <span class="function">predict</span>(<span class="variable">input</span>);',
+      '<span class="keyword">if</span> (<span class="variable">confidence</span> <span class="operator">></span> <span class="number">0.95</span>) {',
+      '  <span class="function">processResult</span>(<span class="variable">prediction</span>);',
+      '}',
+      '',
+      '<span class="comment">// Initialize neural network</span>',
+      '<span class="keyword">class</span> <span class="function">NeuralNetwork</span> {',
+      '  <span class="function">constructor</span>(<span class="variable">layers</span>) {',
+      '    <span class="keyword">this</span>.<span class="variable">weights</span> <span class="operator">=</span> [];',
+      '  }',
+      '}',
+      '',
+      '<span class="keyword">import</span> { <span class="variable">Pipeline</span> } <span class="keyword">from</span> <span class="string">"@ai/core"</span>;',
+      '<span class="keyword">import</span> { <span class="variable">Agent</span> } <span class="keyword">from</span> <span class="string">"@ai/agents"</span>;',
+      '',
+      '<span class="keyword">const</span> <span class="variable">embeddings</span> <span class="operator">=</span> <span class="function">vectorize</span>(<span class="variable">text</span>);',
+      '<span class="keyword">await</span> <span class="variable">db</span>.<span class="function">store</span>(<span class="variable">embeddings</span>);',
+      '',
+      '<span class="comment">// Process API request</span>',
+      '<span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="function">handler</span>(<span class="variable">req</span>) {',
+      '  <span class="keyword">const</span> <span class="variable">response</span> <span class="operator">=</span> <span class="keyword">await</span> <span class="function">generate</span>();',
+      '  <span class="keyword">return</span> <span class="variable">response</span>;',
+      '}',
+      '',
+      '<span class="keyword">def</span> <span class="function">analyze</span>(<span class="variable">dataset</span>):',
+      '    <span class="variable">results</span> <span class="operator">=</span> <span class="variable">model</span>.<span class="function">evaluate</span>(<span class="variable">dataset</span>)',
+      '    <span class="keyword">return</span> <span class="variable">results</span>',
+      '',
+      '<span class="comment">// Deploy automation</span>',
+      '<span class="keyword">const</span> <span class="variable">workflow</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="function">Workflow</span>({',
+      '  <span class="variable">trigger</span>: <span class="string">"onData"</span>,',
+      '  <span class="variable">action</span>: <span class="function">processAI</span>',
+      '});',
+      '',
+      '<span class="variable">metrics</span>.<span class="function">track</span>(<span class="string">"accuracy"</span>, <span class="number">0.97</span>);',
+      '<span class="variable">metrics</span>.<span class="function">track</span>(<span class="string">"latency"</span>, <span class="number">42</span>);',
     ];
 
-    const charCount = 35;
+    // Create code columns
+    const columnCount = 6;
+    const columnPositions = [3, 18, 35, 55, 72, 88];
 
-    function createCodeChar() {
-      const char = document.createElement('span');
-      char.className = 'code-char' + (Math.random() > 0.7 ? ' accent' : '');
-      char.textContent = codeChars[Math.floor(Math.random() * codeChars.length)];
+    function createCodeColumn(index) {
+      const column = document.createElement('div');
+      column.className = 'code-column';
+      column.style.left = columnPositions[index] + '%';
 
-      // Random position
-      char.style.left = Math.random() * 100 + '%';
-      char.style.top = Math.random() * 100 + '%';
+      // Random speed for each column
+      const duration = 45 + Math.random() * 30;
+      column.style.animationDuration = duration + 's';
 
-      // Random animation duration and delay
-      const duration = 6 + Math.random() * 8;
-      const delay = Math.random() * 10;
-      char.style.animationDuration = duration + 's';
-      char.style.animationDelay = delay + 's';
+      // Stagger start positions
+      const startOffset = Math.random() * -50;
+      column.style.top = startOffset + '%';
 
-      // Random size variation
-      const size = 12 + Math.random() * 6;
-      char.style.fontSize = size + 'px';
+      // Create lines - duplicate for seamless loop
+      const shuffled = [...codeSnippets].sort(() => Math.random() - 0.5);
+      const lines = [...shuffled, ...shuffled];
 
-      return char;
+      lines.forEach(snippet => {
+        const line = document.createElement('div');
+        line.className = 'code-line';
+        line.innerHTML = snippet || '&nbsp;';
+        column.appendChild(line);
+      });
+
+      return column;
     }
 
-    // Create initial characters
-    for (let i = 0; i < charCount; i++) {
-      codeRain.appendChild(createCodeChar());
-    }
+    // Create columns with staggered appearance
+    for (let i = 0; i < columnCount; i++) {
+      const column = createCodeColumn(i);
+      codeRain.appendChild(column);
 
-    // Periodically refresh some characters for variety
-    setInterval(() => {
-      const chars = codeRain.querySelectorAll('.code-char');
-      if (chars.length > 0) {
-        const randomIndex = Math.floor(Math.random() * chars.length);
-        const oldChar = chars[randomIndex];
-        const newChar = createCodeChar();
-        newChar.style.animationDelay = '0s';
-        codeRain.replaceChild(newChar, oldChar);
-      }
-    }, 3000);
+      // Fade in columns gradually
+      setTimeout(() => {
+        column.classList.add('visible');
+      }, i * 400);
+    }
   }
 
   // Mobile Navigation Toggle
