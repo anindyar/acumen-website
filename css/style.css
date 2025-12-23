@@ -422,38 +422,38 @@ code, .mono {
 /* Syntax highlighting colors - very subtle */
 .code-line .keyword {
   color: var(--primary);
-  opacity: 0.25;
+  opacity: 0.12;
 }
 
 .code-line .function {
   color: var(--accent);
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .code-line .string {
   color: #a5d6a7;
-  opacity: 0.18;
+  opacity: 0.09;
 }
 
 .code-line .comment {
   color: var(--text-muted);
-  opacity: 0.15;
+  opacity: 0.08;
   font-style: italic;
 }
 
 .code-line .operator {
   color: var(--primary-light);
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .code-line .variable {
   color: var(--text-secondary);
-  opacity: 0.18;
+  opacity: 0.09;
 }
 
 .code-line .number {
   color: var(--accent-light);
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 @keyframes codeScroll {
