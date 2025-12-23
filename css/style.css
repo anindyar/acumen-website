@@ -1408,7 +1408,7 @@ code, .mono {
 /* CTA Section */
 .cta-section {
   background: linear-gradient(135deg, var(--bg-code) 0%, #1e1b4b 100%);
-  color: var(--text-inverse);
+  color: var(--text-primary);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1434,12 +1434,12 @@ code, .mono {
 }
 
 .cta-section h2 {
-  color: var(--text-inverse);
+  color: var(--text-primary);
   margin-bottom: var(--space-md);
 }
 
 .cta-section p {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 1.25rem;
   max-width: 600px;
   margin: 0 auto var(--space-xl);
