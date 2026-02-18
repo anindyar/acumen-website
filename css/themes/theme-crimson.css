@@ -1,0 +1,41 @@
+/* Acumen Labs - Midnight Crimson Theme */
+/* Dark theme with crimson reds and silver */
+
+:root {
+  /* Primary Colors - Crimson */
+  --primary: #dc2626;
+  --primary-dark: #b91c1c;
+  --primary-light: #f87171;
+
+  /* Accent Colors - Silver */
+  --accent: #94a3b8;
+  --accent-dark: #64748b;
+  --accent-light: #cbd5e1;
+
+  /* Dark Crimson Backgrounds */
+  --bg-primary: #1c1517;
+  --bg-secondary: #271c1f;
+  --bg-tertiary: #332428;
+  --bg-code: #140f11;
+
+  /* Off-white Text */
+  --text-primary: #fef2f2;
+  --text-secondary: #d4b5b8;
+  --text-muted: #a88a8e;
+  --text-inverse: #1c1517;
+
+  /* Semantic */
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+
+  /* Code/Terminal */
+  --terminal-green: #f87171;
+  --terminal-blue: #dc2626;
+  --terminal-purple: #94a3b8;
+  --terminal-yellow: #cbd5e1;
+
+  /* Border Colors */
+  --border-light: #4a3538;
+  --border-medium: #5c4448;
+}

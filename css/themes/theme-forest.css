@@ -1,0 +1,41 @@
+/* Acumen Labs - Forest Green Theme */
+/* Rich forest greens with warm amber */
+
+:root {
+  /* Primary Colors - Forest Green */
+  --primary: #059669;
+  --primary-dark: #047857;
+  --primary-light: #34d399;
+
+  /* Accent Colors - Amber */
+  --accent: #f59e0b;
+  --accent-dark: #d97706;
+  --accent-light: #fbbf24;
+
+  /* Dark Forest Backgrounds */
+  --bg-primary: #0f1f17;
+  --bg-secondary: #162821;
+  --bg-tertiary: #1e352b;
+  --bg-code: #0a1610;
+
+  /* Off-white Text */
+  --text-primary: #ecfdf5;
+  --text-secondary: #a7c4b5;
+  --text-muted: #6b8f7d;
+  --text-inverse: #0f1f17;
+
+  /* Semantic */
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+
+  /* Code/Terminal */
+  --terminal-green: #34d399;
+  --terminal-blue: #059669;
+  --terminal-purple: #f59e0b;
+  --terminal-yellow: #fbbf24;
+
+  /* Border Colors */
+  --border-light: #2d4f3e;
+  --border-medium: #3d6350;
+}

@@ -1,0 +1,41 @@
+/* Acumen Labs - Sunset Violet Theme */
+/* Purple/violet with coral accents */
+
+:root {
+  /* Primary Colors - Violet */
+  --primary: #8b5cf6;
+  --primary-dark: #7c3aed;
+  --primary-light: #a78bfa;
+
+  /* Accent Colors - Coral Pink */
+  --accent: #f472b6;
+  --accent-dark: #ec4899;
+  --accent-light: #f9a8d4;
+
+  /* Dark Violet Backgrounds */
+  --bg-primary: #1a1625;
+  --bg-secondary: #231e30;
+  --bg-tertiary: #2e283d;
+  --bg-code: #13101a;
+
+  /* Off-white Text */
+  --text-primary: #faf5ff;
+  --text-secondary: #c4b5d8;
+  --text-muted: #9184a8;
+  --text-inverse: #1a1625;
+
+  /* Semantic */
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #fb7185;
+
+  /* Code/Terminal */
+  --terminal-green: #a78bfa;
+  --terminal-blue: #8b5cf6;
+  --terminal-purple: #f472b6;
+  --terminal-yellow: #f9a8d4;
+
+  /* Border Colors */
+  --border-light: #3d3456;
+  --border-medium: #4f4568;
+}

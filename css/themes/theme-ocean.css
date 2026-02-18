@@ -1,0 +1,41 @@
+/* Acumen Labs - Ocean Blue Theme */
+/* Deep ocean blues with gold accents */
+
+:root {
+  /* Primary Colors - Ocean Blue */
+  --primary: #0284c7;
+  --primary-dark: #0369a1;
+  --primary-light: #38bdf8;
+
+  /* Accent Colors - Gold */
+  --accent: #fbbf24;
+  --accent-dark: #f59e0b;
+  --accent-light: #fcd34d;
+
+  /* Dark Ocean Backgrounds */
+  --bg-primary: #0c1929;
+  --bg-secondary: #132234;
+  --bg-tertiary: #1a2d42;
+  --bg-code: #091520;
+
+  /* Off-white Text */
+  --text-primary: #f0f9ff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0c1929;
+
+  /* Semantic */
+  --success: #10b981;
+  --warning: #fbbf24;
+  --error: #f87171;
+
+  /* Code/Terminal */
+  --terminal-green: #38bdf8;
+  --terminal-blue: #0284c7;
+  --terminal-purple: #fbbf24;
+  --terminal-yellow: #fcd34d;
+
+  /* Border Colors */
+  --border-light: #1e3a5f;
+  --border-medium: #2d4a6f;
+}

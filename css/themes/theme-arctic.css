@@ -1,0 +1,55 @@
+/* Acumen Labs - Arctic Light Theme */
+/* Light theme with cool blue accents */
+
+:root {
+  /* Primary Colors - Cool Blue */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+
+  /* Accent Colors - Indigo */
+  --accent: #6366f1;
+  --accent-dark: #4f46e5;
+  --accent-light: #818cf8;
+
+  /* Light Arctic Backgrounds */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --bg-code: #1e293b;
+
+  /* Dark Text for Light Theme */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #f8fafc;
+
+  /* Semantic */
+  --success: #059669;
+  --warning: #d97706;
+  --error: #dc2626;
+
+  /* Code/Terminal - Keep dark for readability */
+  --terminal-green: #22d3ee;
+  --terminal-blue: #3b82f6;
+  --terminal-purple: #8b5cf6;
+  --terminal-yellow: #fbbf24;
+
+  /* Border Colors - Light Theme */
+  --border-light: #cbd5e1;
+  --border-medium: #94a3b8;
+
+  /* Override shadows for light theme */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 40px -10px rgb(0 0 0 / 0.15), 0 8px 16px -8px rgb(0 0 0 / 0.1);
+}
+
+/* Light theme specific overrides */
+body::before,
+body::after {
+  background: 
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(99, 102, 241, 0.06) 0%, transparent 50%);
+}

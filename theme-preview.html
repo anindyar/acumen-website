@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Preview - Acumen Labs</title>
+  <link rel="stylesheet" href="css/style.css" id="main-style">
+  <link rel="stylesheet" href="" id="theme-style">
+  <style>
+    /* Theme Switcher Styles */
+    .theme-switcher {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-xl);
+      max-width: 280px;
+    }
+
+    .theme-switcher h3 {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: var(--space-md);
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .theme-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-sm);
+      background: var(--bg-tertiary);
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .theme-btn.active {
+      border-color: var(--primary);
+      background: var(--bg-primary);
+    }
+
+    .theme-preview-colors {
+      display: flex;
+      gap: 2px;
+      border-radius: 4px;
+      overflow: hidden;
+      width: 100%;
+      height: 24px;
+    }
+
+    .theme-preview-colors span {
+      flex: 1;
+    }
+
+    .theme-btn-label {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    /* Color Palette Display */
+    .color-showcase {
+      margin-top: var(--space-xl);
+      padding: var(--space-xl);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+    }
+
+    .color-showcase h4 {
+      margin-bottom: var(--space-lg);
+      color: var(--text-primary);
+    }
+
+    .color-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .color-swatch .swatch {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+    }
+
+    .color-swatch .label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Demo Sections */
+    .demo-section {
+      padding: var(--space-3xl) 0;
+    }
+
+    .demo-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-xl);
+      margin-top: var(--space-xl);
+    }
+
+    .demo-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+    }
+
+    .demo-card h4 {
+      color: var(--primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .demo-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Demo Buttons */
+    .demo-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--text-inverse);
+      padding: var(--space-sm) var(--space-lg);
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--text-inverse);
+      padding: var(--space-sm) var(--space-lg);
+      border: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      padding: var(--space-sm) var(--space-lg);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--text-inverse);
+    }
+
+    /* Code Block Demo */
+    .code-demo {
+      background: var(--bg-code);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin-top: var(--space-xl);
+    }
+
+    .code-demo .keyword { color: var(--terminal-purple); }
+    .code-demo .function { color: var(--terminal-blue); }
+    .code-demo .string { color: var(--terminal-green); }
+    .code-demo .comment { color: var(--text-muted); }
+
+    .toggle-switcher {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 10000;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 600;
+      display: none;
+    }
+
+    .theme-switcher.collapsed {
+      display: none;
+    }
+
+    .theme-switcher.collapsed + .toggle-switcher {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Switcher Panel -->
+  <div class="theme-switcher" id="themeSwitcher">
+    <h3>🎨 Select Theme</h3>
+    <div class="theme-grid">
+      <button class="theme-btn active" data-theme="default" onclick="setTheme('default')">
+        <div class="theme-preview-colors">
+          <span style="background: #06b6d4;"></span>
+          <span style="background: #fb923c;"></span>
+          <span style="background: #252530;"></span>
+        </div>
+        <span class="theme-btn-label">Default</span>
+      </button>
+      <button class="theme-btn" data-theme="ocean" onclick="setTheme('ocean')">
+        <div class="theme-preview-colors">
+          <span style="background: #0284c7;"></span>
+          <span style="background: #fbbf24;"></span>
+          <span style="background: #0c1929;"></span>
+        </div>
+        <span class="theme-btn-label">Ocean</span>
+      </button>
+      <button class="theme-btn" data-theme="forest" onclick="setTheme('forest')">
+        <div class="theme-preview-colors">
+          <span style="background: #059669;"></span>
+          <span style="background: #f59e0b;"></span>
+          <span style="background: #0f1f17;"></span>
+        </div>
+        <span class="theme-btn-label">Forest</span>
+      </button>
+      <button class="theme-btn" data-theme="violet" onclick="setTheme('violet')">
+        <div class="theme-preview-colors">
+          <span style="background: #8b5cf6;"></span>
+          <span style="background: #f472b6;"></span>
+          <span style="background: #1a1625;"></span>
+        </div>
+        <span class="theme-btn-label">Violet</span>
+      </button>
+      <button class="theme-btn" data-theme="crimson" onclick="setTheme('crimson')">
+        <div class="theme-preview-colors">
+          <span style="background: #dc2626;"></span>
+          <span style="background: #94a3b8;"></span>
+          <span style="background: #1c1517;"></span>
+        </div>
+        <span class="theme-btn-label">Crimson</span>
+      </button>
+      <button class="theme-btn" data-theme="arctic" onclick="setTheme('arctic')">
+        <div class="theme-preview-colors">
+          <span style="background: #3b82f6;"></span>
+          <span style="background: #6366f1;"></span>
+          <span style="background: #f8fafc;"></span>
+        </div>
+        <span class="theme-btn-label">Arctic ☀️</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header style="padding: var(--space-xl); border-bottom: 1px solid var(--border-light);">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+      <h1 style="color: var(--primary); font-size: 1.5rem;">Acumen Lab'd</h1>
+      <nav style="display: flex; gap: var(--space-lg);">
+        <a href="#" style="color: var(--text-secondary); text-decoration: none;">Home</a>
+        <a href="#" style="color: var(--text-secondary); text-decoration: none;">Services</a>
+        <a href="#" style="color: var(--text-secondary); text-decoration: none;">About</a>
+        <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 600;">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main style="max-width: 1200px; margin: 0 auto; padding: var(--space-xl);">
+    
+    <!-- Hero Section -->
+    <section style="text-align: center; padding: var(--space-3xl) 0;">
+      <h1 style="font-size: 3rem; margin-bottom: var(--space-lg);">
+        Theme Preview <span style="color: var(--primary);">Gallery</span>
+      </h1>
+      <p style="font-size: 1.25rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+        Test different color themes for the Acumen Labs website. 
+        Use the <span style="color: var(--accent);">theme switcher</span> on the right to preview each option.
+      </p>
+    </section>
+
+    <!-- Color Palette Showcase -->
+    <section class="color-showcase">
+      <h4>Current Theme Colors</h4>
+      
+      <h5 style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: var(--space-sm);">PRIMARY</h5>
+      <div class="color-row">
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--primary);"></div>
+          <span class="label">Primary</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--primary-dark);"></div>
+          <span class="label">Dark</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--primary-light);"></div>
+          <span class="label">Light</span>
+        </div>
+      </div>
+
+      <h5 style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: var(--space-sm);">ACCENT</h5>
+      <div class="color-row">
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--accent);"></div>
+          <span class="label">Accent</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--accent-dark);"></div>
+          <span class="label">Dark</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--accent-light);"></div>
+          <span class="label">Light</span>
+        </div>
+      </div>
+
+      <h5 style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: var(--space-sm);">BACKGROUNDS</h5>
+      <div class="color-row">
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--bg-primary);"></div>
+          <span class="label">Primary BG</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--bg-secondary);"></div>
+          <span class="label">Secondary</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch" style="background: var(--bg-tertiary);"></div>
+          <span class="label">Tertiary</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Cards -->
+    <section class="demo-section">
+      <h2 style="margin-bottom: var(--space-md);">Component Preview</h2>
+      <p style="color: var(--text-secondary);">See how UI elements look with the current theme.</p>
+      
+      <div class="demo-cards">
+        <div class="demo-card">
+          <h4>Cloud Infrastructure</h4>
+          <p>Scalable, secure cloud solutions designed for modern enterprises. Multi-cloud architecture and DevOps automation.</p>
+        </div>
+        <div class="demo-card">
+          <h4>AI & Machine Learning</h4>
+          <p>Intelligent automation and predictive analytics to transform your business operations and decision-making.</p>
+        </div>
+        <div class="demo-card">
+          <h4>Cybersecurity</h4>
+          <p>Comprehensive security solutions including SOC services, penetration testing, and compliance frameworks.</p>
+        </div>
+      </div>
+
+      <!-- Buttons Demo -->
+      <div class="demo-buttons">
+        <button class="btn-primary">Primary Button</button>
+        <button class="btn-accent">Accent Button</button>
+        <button class="btn-outline">Outline Button</button>
+      </div>
+
+      <!-- Code Demo -->
+      <div class="code-demo">
+        <span class="comment">// Sample code block</span><br>
+        <span class="keyword">const</span> <span class="function">deployInfrastructure</span> = <span class="keyword">async</span> () => {<br>
+        &nbsp;&nbsp;<span class="keyword">const</span> config = <span class="keyword">await</span> <span class="function">loadConfig</span>(<span class="string">'production'</span>);<br>
+        &nbsp;&nbsp;<span class="keyword">return</span> <span class="function">terraform</span>.<span class="function">apply</span>(config);<br>
+        };
+      </div>
+    </section>
+
+    <!-- Typography Demo -->
+    <section class="demo-section">
+      <h2>Typography</h2>
+      <h1 style="margin-top: var(--space-lg);">Heading 1 - Primary Text</h1>
+      <h2>Heading 2 - Primary Text</h2>
+      <h3>Heading 3 - Primary Text</h3>
+      <p style="margin-top: var(--space-md);">
+        This is body text using <strong>--text-primary</strong>. Lorem ipsum dolor sit amet, 
+        consectetur adipiscing elit. <span style="color: var(--primary);">Primary colored text</span> and 
+        <span style="color: var(--accent);">accent colored text</span> for emphasis.
+      </p>
+      <p style="color: var(--text-secondary); margin-top: var(--space-sm);">
+        This is secondary text using --text-secondary for less prominent content.
+      </p>
+      <p style="color: var(--text-muted); margin-top: var(--space-sm);">
+        This is muted text using --text-muted for subtle annotations and hints.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top: 1px solid var(--border-light); padding: var(--space-xl); text-align: center; color: var(--text-muted);">
+    <p>© 2026 Acumen Lab'd. Theme Preview Page.</p>
+  </footer>
+
+  <script>
+    const themes = {
+      default: '',
+      ocean: 'css/themes/theme-ocean.css',
+      forest: 'css/themes/theme-forest.css',
+      violet: 'css/themes/theme-violet.css',
+      crimson: 'css/themes/theme-crimson.css',
+      arctic: 'css/themes/theme-arctic.css'
+    };
+
+    function setTheme(themeName) {
+      const themeLink = document.getElementById('theme-style');
+      themeLink.href = themes[themeName];
+      
+      // Update active button
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.theme === themeName) {
+          btn.classList.add('active');
+        }
+      });
+
+      // Save preference
+      localStorage.setItem('acumen-theme', themeName);
+    }
+
+    // Load saved theme on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('acumen-theme');
+      if (savedTheme && themes[savedTheme]) {
+        setTheme(savedTheme);
+      }
+    });
+  </script>
+</body>
+</html>
