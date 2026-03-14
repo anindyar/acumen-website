@@ -305,6 +305,12 @@ code, .mono {
   color: var(--text-primary);
 }
 
+.logo-img {
+  height: 40px;
+  width: auto;
+  border-radius: 4px;
+}
+
 .logo span {
   background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
   -webkit-background-clip: text;
